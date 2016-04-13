@@ -1,0 +1,3 @@
+[submodule "libs/math"]
+	path = libs/math
+	url = https://github.com/vitali-kurlovich/RMMath.git
