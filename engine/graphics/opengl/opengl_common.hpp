@@ -5,6 +5,9 @@
 #ifndef RMPROPELLER_OPENGL_COMMON_HPP
 #define RMPROPELLER_OPENGL_COMMON_HPP
 
+#include <opengl/gl.h>
+
+
 
 #include "../graphics_common.hpp"
 

@@ -78,7 +78,6 @@ namespace rmengine {
                         _flagPixelProgramCompiled = true;
                         _flagPixelProgramHasError = false;
                     } else {
-
                         _pixelProgram->compile();
                         _flagPixelProgramCompiled = _pixelProgram->isCompiled();
                         _flagPixelProgramHasError = _pixelProgram->hasError();
