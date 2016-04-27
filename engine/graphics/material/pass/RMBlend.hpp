@@ -10,7 +10,7 @@
 namespace rmengine {
     namespace graphics {
 
-        typedef enum : rm_uint8 {
+        typedef enum : uint8 {
             RMBlendFunc_Zero = 0,
             RMBlendFunc_One = 1,
             RMBlendFunc_SrcColor = 2,
@@ -33,7 +33,7 @@ namespace rmengine {
         } RMBlendFunc;
 
 
-        typedef enum : rm_uint8 {
+        typedef enum : uint8 {
             RMBlendEquation_Add = 0,
             RMBlendEquation_Subtract = 1,
             RMBlendEquation_ReverseSubtract = 2,
@@ -50,7 +50,7 @@ namespace rmengine {
                     RMBlendFunc alphaSrc;
                     RMBlendFunc alphaDst;
                 };
-                rm_uint32 blendFunc;
+                uint32 blendFunc;
             };
 
             RMBlendEquation equation;

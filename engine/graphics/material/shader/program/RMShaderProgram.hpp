@@ -20,12 +20,12 @@ namespace rmengine {
         protected:
             union {
                 struct {
-                    rm_uint8 _flagVertexProgramCompiled:1;
-                    rm_uint8 _flagPixelProgramCompiled:1;
-                    rm_uint8 _flagVertexProgramHasError:1;
-                    rm_uint8 _flagPixelProgramHasError:1;
+                    uint8 _flagVertexProgramCompiled:1;
+                    uint8 _flagPixelProgramCompiled:1;
+                    uint8 _flagVertexProgramHasError:1;
+                    uint8 _flagPixelProgramHasError:1;
                 };
-                rm_uint8 _shaderFlags;
+                uint8 _shaderFlags;
             };
 
             RMVertexProgram *_vertexProgram;

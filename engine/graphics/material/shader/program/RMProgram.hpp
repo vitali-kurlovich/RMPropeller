@@ -14,10 +14,10 @@ namespace rmengine {
         protected:
             union {
                 struct {
-                    rm_uint8 _flagCompiled:1;
-                    rm_uint8 _flagHasError:1;
+                    uint8 _flagCompiled:1;
+                    uint8 _flagHasError:1;
                 };
-                rm_uint8 _flags;
+                uint8 _flags;
             };
 
         public:

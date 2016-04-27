@@ -18,8 +18,9 @@ namespace rmengine {
         class RMPass {
         protected:
             RMAlpha alpha;
-            RMBlend blend;
             RMDepth depth;
+            RMBlend blend;
+
 
             RMShader *shader;
         public:

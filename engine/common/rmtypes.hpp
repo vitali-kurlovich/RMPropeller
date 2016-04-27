@@ -8,21 +8,30 @@
 #include <cstdint>
 #include <string>
 
+#include "../../libs/math/rmvmath/types/float.h"
+
 namespace rmengine {
 
-    typedef std::uint8_t rm_uint8;
-    typedef std::int8_t rm_int8;
+    typedef std::uint8_t uint8;
+    typedef std::int8_t int8;
 
-    typedef std::uint16_t rm_uint16;
-    typedef std::int16_t rm_int16;
+    typedef std::uint16_t uint16;
+    typedef std::int16_t int16;
 
-    typedef std::uint32_t rm_uint32;
-    typedef std::int32_t rm_int32;
+    typedef std::uint32_t uint32;
+    typedef std::int32_t int32;
 
-    typedef std::uint64_t rm_uint64;
-    typedef std::int64_t rm_int64;
+    typedef std::uint64_t uint64;
+    typedef std::int64_t int64;
 
-    typedef std::string rm_string;
+    typedef std::string string;
+
+    typedef rmmath::fvec2 vec2;
+    typedef rmmath::fvec3 vec3;
+    typedef rmmath::fvec4 vec4;
+
+    typedef rmmath::favec3 pos2;
+    typedef rmmath::favec4 pos3;
 
 }
 #endif //RMPROPELLER_RMTYPES_HPP

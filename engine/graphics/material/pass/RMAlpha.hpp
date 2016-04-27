@@ -11,7 +11,7 @@
 namespace rmengine {
     namespace graphics {
 
-        typedef enum : rm_uint8 {
+        typedef enum : uint8 {
             RMAlphaFunc_Never = 0,
             RMAlphaFunc_Less = 1,
             RMAlphaFunc_Equal = 2,
@@ -24,9 +24,9 @@ namespace rmengine {
 
 
         struct RMAlpha {
-            RMAlphaFunc alphaFunc;
             float value;
-        public:
+            RMAlphaFunc alphaFunc;
+
             RMAlpha(RMAlphaFunc alphaFunc, float value)
                     : alphaFunc(alphaFunc), value(value) {
             }
@@ -36,11 +36,11 @@ namespace rmengine {
             }
         };
 
-        inline bool operator==(const RMAlpha &a, const RMAlpha &b) {
+        inline bool operator == (const RMAlpha &a, const RMAlpha &b) {
             return a.alphaFunc == b.alphaFunc && a.value == b.value;
         }
 
-        inline bool operator!=(const RMAlpha &a, const RMAlpha &b) {
+        inline bool operator != (const RMAlpha &a, const RMAlpha &b) {
             return !(a == b);
         }
 

@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     rmengine::graphics::RMBlend blendC;
     blendC = blendA;
 
-    std::cout << static_cast<rmengine::rm_uint32>(blend.blendFunc) << std::endl;
+    std::cout << static_cast<rmengine::uint32>(blend.blendFunc) << std::endl;
 
     rmengine::graphics::RMGLVertexProgram program;
 

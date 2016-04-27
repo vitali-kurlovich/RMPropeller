@@ -10,7 +10,7 @@
 namespace rmengine {
     namespace graphics {
 
-        typedef enum : rm_uint8 {
+        typedef enum : uint8 {
 
             RMDepthFunc_Never = 0,
             RMDepthFunc_Less = 1,
@@ -37,11 +37,11 @@ namespace rmengine {
             }
         };
 
-        inline bool operator==(const RMDepth &a, const RMDepth &b) {
+        inline bool operator == (const RMDepth &a, const RMDepth &b) {
             return a.depthFunc == b.depthFunc && a.write == b.write;
         }
 
-        inline bool operator!=(const RMDepth &a, const RMDepth &b) {
+        inline bool operator != (const RMDepth &a, const RMDepth &b) {
             return !(a == b);
         }
     }
