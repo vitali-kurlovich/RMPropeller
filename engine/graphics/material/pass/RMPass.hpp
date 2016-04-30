@@ -5,7 +5,6 @@
 #ifndef RMPROPELLER_RMPASS_HPP
 #define RMPROPELLER_RMPASS_HPP
 
-#include "RMAlpha.hpp"
 #include "RMBlend.hpp"
 #include "RMDepth.hpp"
 
@@ -17,13 +16,15 @@ namespace rmengine {
 
         class RMPass {
         protected:
-            RMAlpha alpha;
-            RMDepth depth;
-            RMBlend blend;
+            RMDepth _depth;
+            RMBlend _blend;
 
-
-            RMShader *shader;
+            RMShader *_shader;
         public:
+
+
+
+
         };
     }
 }

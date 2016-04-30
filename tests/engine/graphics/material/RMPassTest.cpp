@@ -4,11 +4,17 @@
 
 #include "gtest/gtest.h"
 
-//#include <graphics/material/pass/RMPass.hpp>
+#include <graphics/material/pass/RMPass.hpp>
 
-TEST(RMPass, emptyTest) {
-    int a = 5;
-    int b = 3;
 
-    EXPECT_EQ(a+b, 8);
+#include <graphics/material/pass/RMBlend.hpp>
+#include <graphics/material/pass/RMDepth.hpp>
+
+
+using namespace rmengine::graphics;
+
+TEST(RMPassTest, emptyTest) {
+
+
+
 }

@@ -19,7 +19,7 @@ namespace rmengine {
 
         public:
 
-            RMShader(const RMShaderProgram* program)
+            RMShader(RMShaderProgram* program)
             : _program(program) {
             }
 

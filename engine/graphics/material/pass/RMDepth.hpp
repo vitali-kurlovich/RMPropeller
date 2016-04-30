@@ -24,16 +24,17 @@ namespace rmengine {
         } RMDepthFunc;
 
         struct RMDepth {
+
             RMDepthFunc depthFunc;
             bool write;
 
         public:
-            RMDepth(const RMDepthFunc depthFunc = RMDepthFunc_Less, const bool write = true)
-                    : depthFunc(depthFunc), write(write) {
+            RMDepth(const bool write = true, const RMDepthFunc depthFunc = RMDepthFunc_Less)
+                    : write(write), depthFunc(depthFunc) {
             }
 
             RMDepth(const RMDepth &other)
-                    : depthFunc(other.depthFunc), write(other.write) {
+                    : write(other.write), depthFunc(other.depthFunc) {
             }
         };
 

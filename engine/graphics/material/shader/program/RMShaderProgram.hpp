@@ -10,9 +10,10 @@
 #include "RMVertexProgram.hpp"
 #include "RMProgram.hpp"
 
-#include "../material_common.hpp"
+#include "../../material_common.hpp"
 
 namespace rmengine {
+
     namespace graphics {
 
         class RMShaderProgram : public RMProgram {
@@ -31,19 +32,19 @@ namespace rmengine {
             RMVertexProgram *_vertexProgram;
             RMPixelProgram *_pixelProgram;
         public:
-            RMShaderProgram(const RMVertexProgram *vertexProgram = nullptr,
-                            const RMPixelProgram *pixelProgram = nullptr)
+            RMShaderProgram( RMVertexProgram *vertexProgram = nullptr,
+                             RMPixelProgram *pixelProgram = nullptr)
                     : RMProgram(),
                       _shaderFlags(0),
                       _vertexProgram(vertexProgram),
                       _pixelProgram(pixelProgram) {
             }
 
-            RMShaderProgram(const RMShaderProgram &other)
+            RMShaderProgram( RMShaderProgram &other)
                     : RMProgram(other),
                       _shaderFlags(other._shaderFlags),
-                      _vertexProgram(other.vertexProgram),
-                      _pixelProgram(other.pixelProgram) {
+                      _vertexProgram(other._vertexProgram),
+                      _pixelProgram(other._pixelProgram) {
             }
 
 

@@ -32,6 +32,7 @@ namespace rmengine {
 
     typedef rmmath::favec3 pos2;
     typedef rmmath::favec4 pos3;
+    
 
 }
 #endif //RMPROPELLER_RMTYPES_HPP

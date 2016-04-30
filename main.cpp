@@ -6,6 +6,8 @@
 
 #include "engine/graphics/opengl/shader/program/RMGLVertexProgram.hpp"
 
+#include <graphics/material/pass/RMPass.hpp>
+
 #include <iostream>
 
 int main(int argc, char **argv) {
@@ -15,6 +17,8 @@ int main(int argc, char **argv) {
 
     rmengine::graphics::RMBlend blendC;
     blendC = blendA;
+
+    std::cout << "sizeof RMPass: " << sizeof( rmengine::graphics::RMPass) << std::endl;
 
     std::cout << static_cast<rmengine::uint32>(blend.blendFunc) << std::endl;
 

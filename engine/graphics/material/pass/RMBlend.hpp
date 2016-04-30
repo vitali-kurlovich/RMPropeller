@@ -50,6 +50,12 @@ namespace rmengine {
                     RMBlendFunc alphaSrc;
                     RMBlendFunc alphaDst;
                 };
+
+                struct {
+                    uint16 colorBlendFunc;
+                    uint16 alphaBlendFunc;
+                };
+
                 uint32 blendFunc;
             };
 
@@ -62,7 +68,6 @@ namespace rmengine {
                     const RMBlendFunc alphaDst = RMBlendFunc_Zero,
                     const RMBlendEquation equation = RMBlendEquation_Add)
                     : src(src), dst(dst), alphaSrc(alphaSrc), alphaDst(alphaDst), equation(equation) {
-
             }
 
             RMBlend(const RMBlend &other)
@@ -71,11 +76,11 @@ namespace rmengine {
 
         };
 
-        inline bool operator==(const RMBlend &a, const RMBlend &b) {
+        inline bool operator == (const RMBlend &a, const RMBlend &b) {
             return a.blendFunc == b.blendFunc && a.equation == b.equation;
         }
 
-        inline bool operator!=(const RMBlend &a, const RMBlend &b) {
+        inline bool operator != (const RMBlend &a, const RMBlend &b) {
             return !(a == b);
         }
     }

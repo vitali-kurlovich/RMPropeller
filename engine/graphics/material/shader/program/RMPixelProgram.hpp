@@ -8,7 +8,7 @@
 
 #include "RMProgram.hpp"
 
-#include "../material_common.hpp"
+#include "../../material_common.hpp"
 
 namespace rmengine {
     namespace graphics {
