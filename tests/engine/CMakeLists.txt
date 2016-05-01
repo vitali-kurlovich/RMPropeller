@@ -6,6 +6,9 @@ add_executable(RMPropellerEngineTest
         graphics/material/technique/RMPassTest.cpp
         graphics/material/technique/RMBlendTest.cpp
         graphics/material/technique/RMDepthTest.cpp
+
+        graphics/material/technique/shader/program/RMProgramTest.cpp
+
         )
 
 

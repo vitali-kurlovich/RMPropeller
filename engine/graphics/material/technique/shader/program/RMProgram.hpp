@@ -30,45 +30,32 @@ namespace rmengine {
             }
 
         protected:
-            virtual bool compileProgram() = 0;
+            virtual bool _compileProgram() = 0;
+            virtual bool _useProgram() = 0;
 
         public:
-            virtual bool useProgram() = 0;
 
-            bool isCompiled() const {
+            const bool isCompiled() const {
                 return _flagCompiled;
             }
 
-            bool compile() {
+            const bool useProgram() {
+                if (_flagCompiled && !_flagHasError) {
+                    return _useProgram();
+                }
+                return false;
+            }
+
+            const bool compile() {
                 if (_flagCompiled) return !hasError();
 
-                if (compileProgram()) {
-                    _flagCompiled = true;
-                    _flagHasError = false;
-                } else {
-                    _flagCompiled = true;
-                    _flagHasError = true;
-                }
+                _flagHasError = !_compileProgram();
+                _flagCompiled = true;
+
                 return _flagCompiled && !_flagHasError;
             }
 
-            bool hasError() {
-                if (_flagHasError) {
-                    return true;
-                }
-
-                if (!isCompiled()) {
-                    return false;
-                }
-
-                if (compileProgram()) {
-                    _flagCompiled = true;
-                    _flagHasError = false;
-                } else {
-                    _flagCompiled = true;
-                    _flagHasError = true;
-                }
-
+            const bool hasError() {
                 return _flagHasError;
             }
         };

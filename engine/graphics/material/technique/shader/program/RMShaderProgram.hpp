@@ -31,6 +31,7 @@ namespace rmengine {
 
             RMVertexProgram *_vertexProgram;
             RMPixelProgram *_pixelProgram;
+
         public:
             RMShaderProgram( RMVertexProgram *vertexProgram = nullptr,
                              RMPixelProgram *pixelProgram = nullptr)
@@ -40,7 +41,7 @@ namespace rmengine {
                       _pixelProgram(pixelProgram) {
             }
 
-            RMShaderProgram( RMShaderProgram &other)
+            RMShaderProgram(RMShaderProgram &other)
                     : RMProgram(other),
                       _shaderFlags(other._shaderFlags),
                       _vertexProgram(other._vertexProgram),
@@ -58,7 +59,7 @@ namespace rmengine {
             }
 
         protected:
-            virtual bool compileProgram() override {
+            virtual bool _compileProgram() override {
 
                 if (_flagCompiled) return true;
 
@@ -70,6 +71,10 @@ namespace rmengine {
                         _vertexProgram->compile();
                         _flagVertexProgramCompiled = _vertexProgram->isCompiled();
                         _flagVertexProgramHasError = _vertexProgram->hasError();
+
+                        if (_flagVertexProgramHasError) {
+                            return false;
+                        }
                     }
                 }
 
@@ -85,9 +90,24 @@ namespace rmengine {
                     }
                 }
 
-                _flagCompiled = _flagVertexProgramCompiled && _flagPixelProgramCompiled;
-                _flagHasError = _flagVertexProgramHasError || _flagPixelProgramHasError;
-                return _flagCompiled;
+                return !(_flagPixelProgramHasError || _flagVertexProgramHasError);
+            }
+
+            virtual bool _useProgram() override {
+                bool result;
+                if (_vertexProgram != nullptr ) {
+                    result = _vertexProgram->useProgram();
+                } else {
+                    result = true;
+                }
+
+                if (result && _pixelProgram != nullptr ) {
+                    result &= _pixelProgram->useProgram();
+                } else {
+                    result &= true;
+                }
+
+                return result;
             }
         };
     }

@@ -5,13 +5,15 @@
 
 #include <graphics/material/technique/RMTechnique.hpp>
 
+#include <graphics/material/technique/shader/program/RMShaderProgram.hpp>
+
 #include <iostream>
 
 int main(int argc, char **argv) {
 
 
 
-    std::cout << "sizeof RMTechnique: " << sizeof( rmengine::graphics::RMPass) << std::endl;
+    std::cout << "sizeof RMShader: " << sizeof( rmengine::graphics::RMShader) << std::endl;
 
     return 0;
 }
