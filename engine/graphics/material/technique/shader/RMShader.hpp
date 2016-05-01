@@ -6,9 +6,9 @@
 #define RMPROPELLER_RMSHADER_HPP
 
 
-#include "program/RMShaderProgram.hpp"
+#include "graphics/material/technique/shader/program/RMShaderProgram.hpp"
 
-#include "../material_common.hpp"
+#include "graphics/material/material_common.hpp"
 
 namespace rmengine {
     namespace graphics {

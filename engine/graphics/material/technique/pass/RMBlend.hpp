@@ -5,9 +5,10 @@
 #ifndef RMPROPELLER_RMBLEND_HPP
 #define RMPROPELLER_RMBLEND_HPP
 
-#include "../material_common.hpp"
+#include "../../material_common.hpp"
 
 namespace rmengine {
+
     namespace graphics {
 
         typedef enum : uint8 {
@@ -59,25 +60,35 @@ namespace rmengine {
                 uint32 blendFunc;
             };
 
-            RMBlendEquation equation;
+        //    RMBlendEquation equation;
 
         public:
+            RMBlend(const RMBlendFunc src ,
+                    const RMBlendFunc dst,
+                    const RMBlendFunc alphaSrc,
+                    const RMBlendFunc alphaDst)
+                    //const RMBlendEquation equation = RMBlendEquation_Add)
+                    : src(src), dst(dst), alphaSrc(alphaSrc), alphaDst(alphaDst) {//, equation(equation) {
+            }
+
             RMBlend(const RMBlendFunc src = RMBlendFunc_One,
-                    const RMBlendFunc dst = RMBlendFunc_Zero,
-                    const RMBlendFunc alphaSrc = RMBlendFunc_One,
-                    const RMBlendFunc alphaDst = RMBlendFunc_Zero,
-                    const RMBlendEquation equation = RMBlendEquation_Add)
-                    : src(src), dst(dst), alphaSrc(alphaSrc), alphaDst(alphaDst), equation(equation) {
+                    const RMBlendFunc dst = RMBlendFunc_Zero)
+            :  src(src), dst(dst), alphaSrc(src), alphaDst(dst) {
+
             }
 
             RMBlend(const RMBlend &other)
-                    : blendFunc(other.blendFunc), equation(other.equation) {
+                    : blendFunc(other.blendFunc) {//, equation(other.equation) {
+            }
+
+            const bool requireBlendEnable() const {
+                return colorBlendFunc != alphaBlendFunc || src != RMBlendFunc_One || dst != RMBlendFunc_Zero;
             }
 
         };
 
         inline bool operator == (const RMBlend &a, const RMBlend &b) {
-            return a.blendFunc == b.blendFunc && a.equation == b.equation;
+            return a.blendFunc == b.blendFunc ;//&& a.equation == b.equation;
         }
 
         inline bool operator != (const RMBlend &a, const RMBlend &b) {

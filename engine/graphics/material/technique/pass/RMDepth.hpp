@@ -5,7 +5,7 @@
 #ifndef RMPROPELLER_RMDEPTH_HPP
 #define RMPROPELLER_RMDEPTH_HPP
 
-#include "../material_common.hpp"
+#include "../../material_common.hpp"
 
 namespace rmengine {
     namespace graphics {
@@ -35,6 +35,10 @@ namespace rmengine {
 
             RMDepth(const RMDepth &other)
                     : write(other.write), depthFunc(other.depthFunc) {
+            }
+
+            const bool requireDepthTestEnable() const {
+                return depthFunc != RMDepthFunc_Always;
             }
         };
 

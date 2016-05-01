@@ -10,7 +10,7 @@
 #include "RMVertexProgram.hpp"
 #include "RMProgram.hpp"
 
-#include "../../material_common.hpp"
+#include "graphics/material/material_common.hpp"
 
 namespace rmengine {
 

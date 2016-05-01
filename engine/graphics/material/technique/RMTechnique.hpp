@@ -7,33 +7,72 @@
 
 
 #include "../material_common.hpp"
-#include "../pass/RMPass.hpp"
 
-static const int RMMaxPassCount = 8;
+#include "pass/RMPass.hpp"
+
+#include <vector>
+
 
 namespace rmengine {
+
     namespace graphics {
 
         class RMTechnique {
         protected:
-            int _passesCount;
-            RMPass* _passes[RMMaxPassCount];
+            std::vector<RMPass*> _passes;
+
+            union {
+                struct {
+                    bool _multipass:1;
+                    bool _requireBlendEnable:1;
+                    bool _requireDepthSort:1;
+                };
+
+                uint32 _flags;
+            };
+
 
         public:
-            RMTechnique(const RMPass* passes = nullptr, const int passesCount = 0)
-            : _passesCount(passesCount) {
-                for (int index = 0; index < passesCount; ++index) {
-                    _passes[index] = passes[index];
-                }
-            }
 
             RMTechnique(const RMTechnique& other)
-                    : _passesCount(other.passesCount) {
-                for (int index = 0; index < other.passesCount; ++index) {
-                    _passes[index] = other.passes[index];
+            : _passes(other._passes), _flags(other._flags) {
+            }
+
+            RMTechnique(std::initializer_list<RMPass*> passes)
+            : _multipass(passes.size() > 1)  {
+                _passes.reserve(passes.size());
+                for ( RMPass* pass : passes ) {
+                    _passes.push_back(pass);
+
+                    _requireBlendEnable |= pass->requireBlendEnable();
+                    _requireDepthSort |= pass->requireDepthSort();
                 }
             }
 
+            RMTechnique(std::vector<RMPass*> passes)
+            : _multipass(passes.size() > 1) {
+
+                _passes.reserve(passes.size());
+                for ( RMPass* pass : passes ) {
+                    _passes.push_back(pass);
+
+                    _requireBlendEnable |= pass->requireBlendEnable();
+                    _requireDepthSort |= pass->requireDepthSort();
+                }
+            }
+
+
+            const bool isMultipass() const {
+                return _multipass;
+            }
+
+            const bool requireBlendEnable() const {
+                return _requireBlendEnable;
+            }
+
+            const bool requireDepthSort() const {
+                return _requireDepthSort;
+            }
         };
     }
 }

@@ -5,7 +5,7 @@
 #ifndef RMPROPELLER_RMPROGRAM_HPP
 #define RMPROPELLER_RMPROGRAM_HPP
 
-#include "../../material_common.hpp"
+#include "graphics/material/material_common.hpp"
 
 namespace rmengine {
     namespace graphics {
