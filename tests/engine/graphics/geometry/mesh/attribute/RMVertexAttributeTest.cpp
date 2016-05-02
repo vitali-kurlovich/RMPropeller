@@ -7,7 +7,8 @@
 #include <graphics/geometry/mesh/attribute/RMVertexAttribute.hpp>
 
 
-    using namespace rmengine::graphics;
+    using namespace rmengine;
+    using  namespace graphics;
 
     TEST(RMVertexAttributeTest, constructor) {
 
@@ -18,7 +19,7 @@
     EXPECT_EQ(a.offset, 0);
 
 
-    RMVertexAttribute b(RMVertexAttributeType_Position, RMAttributeElementSize_2, 12);
+    RMVertexAttribute b(RMVertexAttributeType_Position, RMAttributeElementSize_2, RMType_Float, 12);
 
     EXPECT_EQ(b.type, RMVertexAttributeType_Position);
     EXPECT_EQ(b.size, RMAttributeElementSize_2);
@@ -30,7 +31,7 @@
 
     EXPECT_EQ(a, b);
 
-    RMVertexAttribute c(RMVertexAttributeType_Normal, RMAttributeElementSize_3, 12);
+    RMVertexAttribute c(RMVertexAttributeType_Normal, RMAttributeElementSize_3, RMType_Float, 12);
 
     EXPECT_NE(a, c);
     a = c;

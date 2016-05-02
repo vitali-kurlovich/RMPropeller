@@ -5,8 +5,7 @@
 #ifndef RMPROPELLER_GRAPHICS_COMMON_HPP
 #define RMPROPELLER_GRAPHICS_COMMON_HPP
 
-#include "../common/rmtypes.hpp"
-
+#include "../common/common.hpp"
 
 
 #endif //RMPROPELLER_GRAPHICS_COMMON_HPP

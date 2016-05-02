@@ -52,8 +52,9 @@ namespace rmengine {
 
             RMVertexAttribute(const RMVertexAttributeType type,
                               const RMAttributeElementSize size,
+                              const RMType elementType = RMType_Float,
                               const uint8 offset = 0)
-            : type(type), size(size), offset(offset) {
+            : type(type), size(size), elementType(elementType), offset(offset) {
 
             }
 

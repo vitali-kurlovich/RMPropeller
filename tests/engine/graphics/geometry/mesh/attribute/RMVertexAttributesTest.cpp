@@ -6,7 +6,8 @@
 
 #include <graphics/geometry/mesh/attribute/RMVertexAttributes.hpp>
 
-using namespace rmengine::graphics;
+using namespace rmengine;
+using namespace graphics;
 
 TEST(RMVertexAttributesTest, constructor) {
 
@@ -24,8 +25,8 @@ TEST(RMVertexAttributesTest, constructor) {
     RMVertexAttributes b =
             {
                     RMVertexAttribute(RMVertexAttributeType_Position, RMAttributeElementSize_2),
-                    RMVertexAttribute(RMVertexAttributeType_Normal, RMAttributeElementSize_3, 2),
-                    RMVertexAttribute(RMVertexAttributeType_UV2, RMAttributeElementSize_2, 6)
+                    RMVertexAttribute(RMVertexAttributeType_Normal, RMAttributeElementSize_3, RMType_Float, 2),
+                    RMVertexAttribute(RMVertexAttributeType_UV2, RMAttributeElementSize_2, RMType_Float, 6)
             };
 
     EXPECT_NE(a, b);

@@ -33,24 +33,8 @@ namespace rmengine {
     typedef rmmath::favec3 pos2;
     typedef rmmath::favec4 pos3;
 
-
-    typedef enum : uint8 {
-        RMType_Int8     = 0,
-        RMType_UInt8    = (0 | (1<<7)),
-
-        RMType_Int16    = 1,
-        RMType_UInt16   = (1 | (1<<7)),
-
-        RMType_Int32    = 2,
-        RMType_UInt32   = (2 | (1<<7)),
-
-        RMType_Float    = 3
-    } RMType;
-
-//
-//    const bool isUnsignedType(const RMType type)  {
-//        return true;//(type & (1<<7)) != 0;
-//    }
-
 }
+
+
+
 #endif //RMPROPELLER_RMTYPES_HPP
