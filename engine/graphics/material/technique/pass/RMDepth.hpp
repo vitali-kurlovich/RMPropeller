@@ -23,7 +23,7 @@ namespace rmengine {
 
         } RMDepthFunc;
 
-        struct RMDepth {
+        struct RMDepth final {
 
             RMDepthFunc depthFunc;
             bool write;

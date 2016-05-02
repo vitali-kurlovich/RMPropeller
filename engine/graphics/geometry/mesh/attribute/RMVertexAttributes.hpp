@@ -15,7 +15,7 @@
 namespace rmengine {
     namespace graphics {
 
-        struct RMVertexAttributes {
+        struct RMVertexAttributes final {
             uint16 type;
             std::vector<RMVertexAttribute> attributes;
 

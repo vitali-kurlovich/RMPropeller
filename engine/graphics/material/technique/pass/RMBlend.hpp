@@ -42,7 +42,7 @@ namespace rmengine {
             RMBlendEquation_Max = 4
         } RMBlendEquation;
 
-        struct RMBlend {
+        struct RMBlend final {
             union {
                 struct {
                     RMBlendFunc src;

@@ -37,7 +37,7 @@ namespace rmengine {
 
         } RMAttributeElementSize;
 
-        struct RMVertexAttribute {
+        struct RMVertexAttribute final {
             union {
                 struct {
                     RMVertexAttributeType type:13;
