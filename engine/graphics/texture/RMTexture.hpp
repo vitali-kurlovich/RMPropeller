@@ -80,6 +80,16 @@ namespace rmengine {
                       _minFiltering(minFiltering), _magFiltering(magFiltering) {
             }
 
+            RMTexture(const RMTextureType type,
+                      const RMTextureWrapping wrapping_s,
+                      const RMTextureWrapping wrapping_t,
+                      const RMTextureFiltering minFiltering = RMTextureFiltering_Nearest,
+                      const RMTextureFiltering magFiltering = RMTextureFiltering_Linear)
+                    : _type(type),
+                      _wrapping_s(wrapping_s), _wrapping_t(wrapping_t), _wrapping_r(wrapping_t),
+                      _minFiltering(minFiltering), _magFiltering(magFiltering) {
+            }
+
             const RMTextureType getType() const {
                 return _type;
             }
@@ -102,6 +112,14 @@ namespace rmengine {
 
             const RMTextureFiltering getMagFiltering() const {
                 return _magFiltering;
+            }
+
+            const bool operator == (const RMTexture &a ) const {
+                return  a._textureFlags == _textureFlags;
+            }
+
+            bool operator != (const RMTexture &a ) const {
+                return !(a == *this);
             }
         };
     }
