@@ -21,7 +21,7 @@ namespace rmengine {
             vec2 uv0;
             vec2 uv1;
         } RMVertex_Pf2_Cf4_U0f2_U1f2;
-        
+
         typedef struct  {
             pos2 pos;
             vec3 color;

@@ -36,7 +36,7 @@ TEST(RMVertexBufferTest, constructor) {
     MOCRMVertexBuffer a(attrs, buffer, 5);
 
     EXPECT_EQ(a.getAttributes(), attrs);
-    EXPECT_EQ(a.getBuffer(), buffer);
+    EXPECT_EQ(a.getVertexBuffer(), buffer);
     EXPECT_EQ(a.getBufferSize(), 5);
 
 }
