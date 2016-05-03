@@ -8,13 +8,15 @@
 #include <graphics/geometry/mesh/attribute/RMVertexAttribute.hpp>
 #include <graphics/material/technique/shader/program/RMShaderProgram.hpp>
 
+#include <graphics/texture/RMTexture.hpp>
+
 #include <iostream>
 
 int main(int argc, char **argv) {
 
 
 
-    std::cout << "sizeof RMVertexAttribute: " << sizeof( rmengine::graphics::RMVertexAttribute) << std::endl;
+    std::cout << "sizeof RMTexture: " << sizeof( rmengine::graphics::RMTexture) << std::endl;
 
     return 0;
 }
