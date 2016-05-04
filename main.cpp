@@ -5,10 +5,10 @@
 
 #include <graphics/material/technique/RMTechnique.hpp>
 
-#include <graphics/geometry/mesh/attribute/RMVertexAttribute.hpp>
-#include <graphics/material/technique/shader/program/RMShaderProgram.hpp>
+
 
 #include <graphics/texture/RMTexture.hpp>
+#include <graphics/texture/RMImage.hpp>
 
 #include <iostream>
 
@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 
 
 
-    std::cout << "sizeof RMTexture: " << sizeof( rmengine::graphics::RMTexture) << std::endl;
+    std::cout << "sizeof RMImage: " << sizeof( rmengine::graphics::RMImage) << std::endl;
 
     return 0;
 }

@@ -6,11 +6,11 @@
 #define RMPROPELLER_RMVERTEXATTRIBUTES_HPP
 
 
-#include "../../geometry_common.hpp"
+#include <vector>
 
+#include "common/common.hpp"
 #include "RMVertexAttribute.hpp"
 
-#include <vector>
 
 namespace rmengine {
     namespace graphics {

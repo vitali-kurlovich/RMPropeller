@@ -42,7 +42,7 @@ namespace rmengine {
         protected:
             union {
                 struct {
-                    RMTextureType _type:3;
+                    RMTextureType _type:4;
 
                     RMTextureWrapping _wrapping_s:2;
                     RMTextureWrapping _wrapping_t:2;

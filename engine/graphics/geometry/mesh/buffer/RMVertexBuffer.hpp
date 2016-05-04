@@ -5,9 +5,9 @@
 #ifndef RMPROPELLER_RMVERTEXBUFFER_HPP
 #define RMPROPELLER_RMVERTEXBUFFER_HPP
 
-#include "graphics/geometry/geometry_common.hpp"
+#include "common/common.hpp"
 
-#include "graphics/geometry/mesh/attribute/RMVertexAttributes.hpp"
+#include "attribute/RMVertexAttributes.hpp"
 
 
 namespace rmengine {

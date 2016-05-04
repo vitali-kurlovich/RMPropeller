@@ -6,7 +6,7 @@
 #define RMPROPELLER_RMVERTEXATTRIBUTE_HPP
 
 
-#include "../../geometry_common.hpp"
+#include "common/common.hpp"
 
 namespace rmengine {
     namespace graphics {
