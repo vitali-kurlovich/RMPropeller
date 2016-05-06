@@ -8,7 +8,7 @@
 
 #include "common/common.hpp"
 
-#include "../RMVertexBuffer.hpp"
+#include "graphics/geometry/VBO/buffer/RMVertexBuffer.hpp"
 
 
 namespace rmengine {

@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include <graphics/geometry/mesh/buffer/attribute/RMVertexAttributes.hpp>
+#include <graphics/geometry/VBO/buffer/attribute/RMVertexAttributes.hpp>
 
 using namespace rmengine;
 using namespace graphics;

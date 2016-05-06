@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include <graphics/geometry/mesh/buffer/RMVertexBuffer.hpp>
+#include <graphics/geometry/VBO/buffer/RMVertexBuffer.hpp>
 
 
 using namespace rmengine;

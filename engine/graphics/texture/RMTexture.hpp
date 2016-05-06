@@ -65,7 +65,8 @@ namespace rmengine {
                       const RMTextureWrapping wrapping_r,
                       const RMTextureFiltering minFiltering = RMTextureFiltering_Nearest,
                       const RMTextureFiltering magFiltering = RMTextureFiltering_Linear)
-                    : _type(type),
+                    :
+                      _type(type),
                       _wrapping_s(wrapping_s), _wrapping_t(wrapping_t), _wrapping_r(wrapping_r),
                       _minFiltering(minFiltering), _magFiltering(magFiltering) {
             }
@@ -75,7 +76,8 @@ namespace rmengine {
                       const RMTextureWrapping wrapping,
                       const RMTextureFiltering minFiltering = RMTextureFiltering_Nearest,
                       const RMTextureFiltering magFiltering = RMTextureFiltering_Linear)
-                    : _type(type),
+                    :
+                      _type(type),
                       _wrapping_s(wrapping), _wrapping_t(wrapping), _wrapping_r(wrapping),
                       _minFiltering(minFiltering), _magFiltering(magFiltering) {
             }
@@ -85,7 +87,8 @@ namespace rmengine {
                       const RMTextureWrapping wrapping_t,
                       const RMTextureFiltering minFiltering = RMTextureFiltering_Nearest,
                       const RMTextureFiltering magFiltering = RMTextureFiltering_Linear)
-                    : _type(type),
+                    :
+                      _type(type),
                       _wrapping_s(wrapping_s), _wrapping_t(wrapping_t), _wrapping_r(wrapping_t),
                       _minFiltering(minFiltering), _magFiltering(magFiltering) {
             }

@@ -7,7 +7,7 @@
 
 #include "common/common.hpp"
 
-#include "attribute/RMVertexAttributes.hpp"
+#include "graphics/geometry/VBO/buffer/attribute/RMVertexAttributes.hpp"
 
 
 namespace rmengine {

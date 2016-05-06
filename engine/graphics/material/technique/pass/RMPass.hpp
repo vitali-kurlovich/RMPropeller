@@ -43,7 +43,7 @@ namespace rmengine {
                     bool _requireDepthSort:1;
                 };
 
-                uint32 _requirements;
+                uint8 _requirements:6;
             };
 
         public:
