@@ -17,7 +17,6 @@ namespace rmengine {
         protected:
             RMTransform3d* _parent;
 
-            vec3 _translate;
             quaternion _rotation;
             vec3 _scale;
 
@@ -33,6 +32,13 @@ namespace rmengine {
             };
 
         public:
+
+            RMTransform3d()
+            : _localTransformMatrix(affine_mat4x4::identity())
+            {
+
+            }
+
 
             const affine_mat4x4& getLocalTransformMatrix() const {
 
@@ -60,10 +66,11 @@ namespace rmengine {
                 }
             }
 
-            virtual void setLocalTranslate(const vec3 &translate) {
+            virtual void setLocalTranslate(const pos3 &translate) {
                 if (_translate != translate) {
                     _translate = translate;
                     _translateChanged = true;
+                    _localTransformMatrix.row[3] = translate.xyz;
                 }
             }
 
