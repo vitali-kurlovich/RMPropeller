@@ -1,9 +1,9 @@
-[submodule "engine/libs/math"]
-	path = engine/libs/math
+[submodule "libs/math"]
+	path = libs/math
 	url = https://github.com/vitali-kurlovich/RMMath.git
 [submodule "tests/libs"]
 	path = tests/libs
 	url = https://github.com/google/googletest.git
-[submodule "engine/libs/glfw"]
-	path = engine/libs/glfw
+[submodule "libs/glfw"]
+	path = libs/glfw
 	url = https://github.com/glfw/glfw.git
