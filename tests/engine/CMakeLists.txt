@@ -18,7 +18,12 @@ add_executable(RMPropellerEngineTest
         graphics/geometry/mesh/attribute/RMVertexAttributesTest.cpp
         graphics/geometry/mesh/buffer/RMVertexBufferTest.cpp
         graphics/geometry/mesh/buffer/3d/RMVertexBuffer3DTest.cpp
-        graphics/texture/RMTextureTest.cpp)
+        graphics/texture/RMTextureTest.cpp
+
+        transform/TTransformTest.cpp
+        transform/TTransform3dTest.cpp
+
+        )
 
 
 target_link_libraries(RMPropellerEngineTest gtest gtest_main)

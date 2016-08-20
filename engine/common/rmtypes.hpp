@@ -35,9 +35,9 @@ namespace rmengine {
     typedef rmmath::favec4 pos3;
 
 
-    typedef rmmath::fquat quaternion;
+    typedef rmmath::fquat quat;
 
-    typedef rmmath::famt4x4 affine_mat4x4;
+    typedef rmmath::famt4x4 amat4x4;
     typedef rmmath::fmt4x4 mat4x4;
 
 }
