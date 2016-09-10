@@ -195,7 +195,7 @@ int main(void)
 
         transform.setRotation( rmmath::utils::rotationQuaternion(phase, vec3(1,0,0)));
 
-        transform.setPosition(vec3(0,0,phase));
+        transform.setPosition(vec3(0, 0, phase*0.321));
 
         //viewport->setClearColor(rgbaf(std::sin(phase*2)*std::sin(phase*2),
         //                              std::cos(phase)*std::cos(phase),
