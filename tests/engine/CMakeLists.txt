@@ -5,6 +5,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 add_executable(RMPropellerEngineTest
 
         common/RMTypeTest.cpp
+        common/RMColorTypeTest.cpp
 
         graphics/material/technique/pass/RMPassTest.cpp
         graphics/material/technique/pass/RMBlendTest.cpp

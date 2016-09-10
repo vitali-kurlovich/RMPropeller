@@ -27,8 +27,9 @@ set(SOURCE_FILES
 
         )
 
-
-
 add_executable(RMPropeller ${SOURCE_FILES})
 target_link_libraries(RMPropeller glad)
 target_link_libraries(RMPropeller glfw ${GLFW_LIBRARIES})
+
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/shader DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

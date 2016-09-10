@@ -10,8 +10,6 @@
 #include "RMBlend.hpp"
 #include "RMDepth.hpp"
 
-#include "../shader/RMShader.hpp"
-
 
 namespace rmengine {
 
@@ -31,7 +29,6 @@ namespace rmengine {
         protected:
             RMBlend _blend;
             RMDepth _depth;
-            RMShader* _shader;
 
             union {
                 struct {

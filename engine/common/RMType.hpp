@@ -12,21 +12,28 @@ namespace rmengine {
     static const uint8 __RMTypeUnsignedBitFlag = 1<<7;
     static const uint8 __RMTypeRealBitFlag = 1<<6;
 
+    static const uint8 __RMTypeSize_1 = 0;
+    static const uint8 __RMTypeSize_2 = 1;
+    static const uint8 __RMTypeSize_4 = 2;
+    static const uint8 __RMTypeSize_8 = 3;
+
 
     typedef enum : uint8 {
-        RMType_Int8     =  0,
-        RMType_UInt8    = (0 | __RMTypeUnsignedBitFlag),
+        RMType_Int8     =  __RMTypeSize_1,
+        RMType_UInt8    = (__RMTypeSize_1 | __RMTypeUnsignedBitFlag),
 
-        RMType_Int16    = 1,
-        RMType_UInt16   = (1 |__RMTypeUnsignedBitFlag),
+        RMType_Int16    = __RMTypeSize_2,
+        RMType_UInt16   = (__RMTypeSize_2 |__RMTypeUnsignedBitFlag),
 
-        RMType_Int32    =  2,
-        RMType_UInt32   = (2 | __RMTypeUnsignedBitFlag),
+        RMType_Int32    =  __RMTypeSize_4,
+        RMType_UInt32   = (__RMTypeSize_4 | __RMTypeUnsignedBitFlag),
 
-        RMType_Int64    =  3,
-        RMType_UInt64   = (3 | __RMTypeUnsignedBitFlag),
+        RMType_Int64    =  __RMTypeSize_8,
+        RMType_UInt64   = (__RMTypeSize_8 | __RMTypeUnsignedBitFlag),
 
-        RMType_Float    = (4 | __RMTypeRealBitFlag)
+        RMType_HalfFloat = (__RMTypeSize_2 | __RMTypeRealBitFlag),
+        RMType_Float     = (__RMTypeSize_4 | __RMTypeRealBitFlag),
+        RMType_Double    = (__RMTypeSize_8 | __RMTypeRealBitFlag)
 
     } RMType;
 

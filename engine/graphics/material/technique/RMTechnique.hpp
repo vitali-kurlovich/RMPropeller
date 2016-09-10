@@ -31,7 +31,6 @@ namespace rmengine {
                 uint32 _flags;
             };
 
-
         public:
 
             RMTechnique(const RMTechnique& other)

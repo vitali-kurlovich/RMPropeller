@@ -17,8 +17,8 @@ namespace rmengine {
         class RMVertexBufferBase {
         protected:
             RMVertexAttributes _attributes;
-            void* _buffer;
             uint32 _bufferSize;
+            void* _buffer;
 
         public:
 

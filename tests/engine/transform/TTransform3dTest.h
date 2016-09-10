@@ -5,11 +5,13 @@
 #ifndef RMVECTORMATH_TTRANSFORM3DTEST_HPP
 #define RMVECTORMATH_TTRANSFORM3DTEST_HPP
 
-#include <transform/TTransform3d.hpp>
+#include <graphics/transform/TTransform3d.hpp>
 
 using namespace rmengine;
+using namespace rmengine::transform;
 
-class TestTTransform3d : public TTransform3d<float> {
+
+class TestTTransform3d : public TTransform3d {
 public:
 
     constexpr bool test_isGlobalTransformNeedsUpdate() const noexcept {

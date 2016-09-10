@@ -7,6 +7,7 @@
 #include "TTransform3dTest.h"
 
 using namespace rmengine;
+using namespace rmengine::transform;
 
 TEST(Transform3d, constructor) {
 

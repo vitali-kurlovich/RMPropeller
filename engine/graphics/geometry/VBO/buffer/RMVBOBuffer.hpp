@@ -11,7 +11,6 @@ namespace rmengine {
 
     namespace graphics {
 
-
         typedef enum : uint8 {
 
             RMDrawBufferType_Static     = 0,

@@ -34,11 +34,16 @@ namespace rmengine {
     typedef rmmath::favec3 pos2;
     typedef rmmath::favec4 pos3;
 
-
     typedef rmmath::fquat quat;
 
     typedef rmmath::famt4x4 amat4x4;
+    typedef rmmath::famt3x3 amat3x3;
+
     typedef rmmath::fmt4x4 mat4x4;
+    typedef rmmath::fmt3x3 mat3x3;
+    typedef rmmath::fmt2x2 mat2x2;
+
+
 
 }
 

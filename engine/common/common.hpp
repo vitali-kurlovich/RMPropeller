@@ -7,6 +7,6 @@
 
 #include "rmtypes.hpp"
 #include "RMType.hpp"
-
+#include "RMColorType.hpp"
 
 #endif //RMPROPELLER_COMMON_HPP

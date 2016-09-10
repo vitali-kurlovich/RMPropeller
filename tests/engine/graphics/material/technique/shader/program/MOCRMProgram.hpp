@@ -6,7 +6,20 @@
 #define RMPROPELLER_MOCRMPROGRAM_HPP
 
 
-#include <graphics/material/technique/shader/program/RMShaderProgram.hpp>
+#include "gtest/gtest.h"
+
+#include <core/resorces/RMResource.hpp>
+
+using namespace rmengine;
+using  namespace graphics;
+
+TEST(RMResourceTest, constructor) {
+
+RMResource::RMResourceType::Vertex;
+
+}
+
+/*
 
 namespace rmengine {
     namespace graphics {
@@ -76,5 +89,6 @@ namespace rmengine {
         };
     }
 }
+ */
 
 #endif //RMPROPELLER_MOCRMPROGRAM_HPP

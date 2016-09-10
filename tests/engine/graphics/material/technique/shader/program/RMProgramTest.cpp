@@ -2,8 +2,11 @@
 // Created by Vitali Kurlovich on 5/1/16.
 //
 
-#include "gtest/gtest.h"
 
+
+
+#include "gtest/gtest.h"
+/*
 #include "MOCRMProgram.hpp"
 
 using namespace rmengine::graphics;
@@ -98,3 +101,5 @@ TEST(RMShaderProgramTest, pixfail) {
 
     EXPECT_FALSE(shader.useProgram());
 }
+
+ */

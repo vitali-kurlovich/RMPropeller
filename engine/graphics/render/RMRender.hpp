@@ -5,11 +5,20 @@
 #ifndef RMPROPELLER_RMRENDER_HPP
 #define RMPROPELLER_RMRENDER_HPP
 
+#include "../viewport/RMViewport.hpp"
 
-class RMRender {
-protected:
+namespace rmengine {
 
-public:
-};
+    namespace graphics {
+
+        class RMRender {
+        private:
+            RMViewport _viewport;
+        public:
+
+
+        };
+    }
+}
 
 #endif //RMPROPELLER_RMRENDER_HPP

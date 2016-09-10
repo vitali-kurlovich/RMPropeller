@@ -4,9 +4,10 @@
 
 #include "gtest/gtest.h"
 
-#include <transform/TTransform.hpp>
+#include <graphics/transform/TTransform.hpp>
 
 using namespace rmengine;
+using namespace rmengine::transform;
 
 TEST(Transform, constructor) {
 
