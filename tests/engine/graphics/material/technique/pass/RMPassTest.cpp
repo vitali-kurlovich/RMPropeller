@@ -11,10 +11,10 @@ using namespace rmengine::graphics;
 
 TEST(RMPassTest, constructor) {
 
-    RMShader shader(nullptr);
-    RMPass a(&shader);
+   // RMShaderProgram shader(nullptr);
+    RMPass a(nullptr);
 
-    EXPECT_EQ(a.getShader(), &shader);
+    EXPECT_EQ(a.getShader(), nullptr);
 
     RMDepth depth;
     RMBlend blend;
@@ -44,9 +44,9 @@ TEST(RMPassTest, constructor) {
     RMDepth depth_b(false, RMDepthFunc_Greater);
     RMBlend blend_b(RMBlendFunc_SrcColor, RMBlendFunc_DstColor);
 
-    RMPass c(depth_b, blend_b, &shader, RMCullFace_None, true);
+    RMPass c(nullptr, depth_b, blend_b, RMCullFace_None, true);
 
-    EXPECT_EQ(c.getShader(), &shader);
+    EXPECT_EQ(c.getShader(), nullptr);
 
     EXPECT_EQ(c.getDepth(), depth_b);
     EXPECT_EQ(c.getBlend(), blend_b);

@@ -9,7 +9,7 @@
 
 #include "RMBlend.hpp"
 #include "RMDepth.hpp"
-
+#include "../program/RMShaderProgram.hpp"
 
 namespace rmengine {
 
@@ -29,6 +29,7 @@ namespace rmengine {
         protected:
             RMBlend _blend;
             RMDepth _depth;
+            RMShaderProgram* _shader;
 
             union {
                 struct {
@@ -45,7 +46,7 @@ namespace rmengine {
 
         public:
 
-            RMPass(RMShader* shader, const RMCullFace cullFace = RMCullFace_Back, const bool requireDepthSort = false)
+            RMPass(RMShaderProgram* shader, const RMCullFace cullFace = RMCullFace_Back, const bool requireDepthSort = false)
                     :  _shader(shader),
                        _cullFace(cullFace),
                        _requireDepthSort(requireDepthSort),
@@ -57,7 +58,7 @@ namespace rmengine {
             }
 
 
-            RMPass(const RMDepth& depth, const RMBlend& blend, RMShader* shader, const RMCullFace cullFace = RMCullFace_Back, const bool requireDepthSort = false )
+            RMPass( RMShaderProgram* shader, const RMDepth& depth, const RMBlend& blend, const RMCullFace cullFace = RMCullFace_Back, const bool requireDepthSort = false )
             : _depth(depth),
               _blend(blend),
               _shader(shader),
@@ -65,16 +66,10 @@ namespace rmengine {
               _requireDepthSort(requireDepthSort),
               _requireBlendEnable(blend.requireBlendEnable()),
               _requireDepthTestEnable(depth.requireDepthTestEnable()),
-              _requireCullFaceEnable(cullFace != RMCullFace_None) {
+              _requireCullFaceEnable(cullFace != RMCullFace_None)
+            {
 
             }
-
-            RMPass(const RMPass& other)
-                    : _depth(other._depth),
-                      _blend(other._blend),
-                      _shader(other._shader),
-                      _requirements(other._requirements) { }
-
 
         public:
             const RMDepth& getDepth() const {
@@ -85,7 +80,7 @@ namespace rmengine {
                 return _blend;
             }
 
-            const RMShader* getShader() const {
+            const RMShaderProgram* getShader() const {
                 return _shader;
             }
 

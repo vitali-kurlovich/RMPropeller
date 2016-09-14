@@ -9,4 +9,7 @@
 #include "RMType.hpp"
 #include "RMColorType.hpp"
 
+#include "../core/RMObject.hpp"
+#include "../core/RMObjectPtr.hpp"
+
 #endif //RMPROPELLER_COMMON_HPP

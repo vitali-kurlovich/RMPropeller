@@ -24,6 +24,9 @@
 
 #include "libs/math/rmvmath/utils/TQuaternionUtils.hpp"
 
+#include "engine/graphics/geometry/mesh/RMMesh.hpp"
+
+
 using namespace rmengine;
 using namespace rmengine::graphics;
 
@@ -36,7 +39,7 @@ using std::ios;
 #ifdef GLAD_DEBUG
 // logs every gl call to the console
 void pre_gl_call(const char *name, void *funcptr, int len_args, ...) {
-    printf("Calling: %s (%d arguments)\n", name, len_args);
+   // printf("Calling: %s (%d arguments)\n", name, len_args);
 }
 #endif
 
@@ -140,10 +143,7 @@ int main(void)
 
     RMGLShader vertShader(vert, RMGLShaderTypeVertex);
 
-
     vertShader.compile();
-
-
 
     string fileName ("shader/basic.frag");
     ifstream inFileFrag( fileName, std::ios::in );
@@ -170,7 +170,6 @@ int main(void)
     program.compile();
 
 
-
     VBOTorus torus(0.8f, 0.6f, 50, 50);
     VBOAxis axis;
 
@@ -180,6 +179,11 @@ int main(void)
 
 
     //rotationQuaternion(0.f, vec3(0,0,1));
+
+    std::cout <<"sizeof RMVertexAttributeItem: " << sizeof(RMVertexAttributeItem) << std::endl;
+
+    std::cout <<"sizeof RMMeshHeader: " << sizeof(RMMeshHeader) << std::endl;
+
 
     while (!glfwWindowShouldClose(window))
     {
@@ -193,9 +197,12 @@ int main(void)
         phase += 0.01f;
 
 
-        transform.setRotation( rmmath::utils::rotationQuaternion(phase, vec3(1,0,0)));
+        transform.setRotation( rmmath::utils::rotationQuaternion(phase, vec3(0,1,0)));
 
-        transform.setPosition(vec3(0, 0, phase*0.321));
+        transform.setPosition(vec3(phase*0.221, 0, 0));
+        transform.setScale(vec3(std::sin(phase*2)*std::sin(phase*2) + 0.5f,
+                                std::sin(phase*2)*std::sin(phase*2) + 0.5f,
+                                std::sin(phase*2)*std::sin(phase*2) + 0.5f));
 
         //viewport->setClearColor(rgbaf(std::sin(phase*2)*std::sin(phase*2),
         //                              std::cos(phase)*std::cos(phase),

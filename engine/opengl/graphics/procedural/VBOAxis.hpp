@@ -59,7 +59,7 @@ namespace rmengine {
 
             void render() const {
                 glBindVertexArray(vaoHandle);
-                glLineWidth(32);
+                //glLineWidth(32);
                 glDrawElements(GL_LINES, 6, GL_UNSIGNED_BYTE, ((GLubyte *)NULL + (0)));
             }
 

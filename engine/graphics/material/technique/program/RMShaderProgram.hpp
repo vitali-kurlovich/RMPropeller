@@ -34,7 +34,6 @@ namespace rmengine {
             virtual void setUniform( const char *name, uint32 val ) noexcept = 0;
             virtual void setUniform( const char *name, bool val ) noexcept = 0;
 
-
             virtual void setUniform( const char *name, const amat3x3 &mat) noexcept {
                 mat3x3 m(
                         mat.m00, mat.m01, 0,

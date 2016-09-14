@@ -22,12 +22,28 @@ TEST(RMTypeTest, cases) {
 
     EXPECT_TRUE(isSignedType(RMType_Float));
 
-
     EXPECT_TRUE(isIntegerType(RMType_UInt8));
     EXPECT_TRUE(isIntegerType(RMType_UInt16));
     EXPECT_TRUE(isIntegerType(RMType_UInt32));
     EXPECT_TRUE(isIntegerType(RMType_UInt64));
 
+    EXPECT_TRUE(isRealType(RMType_HalfFloat));
     EXPECT_TRUE(isRealType(RMType_Float));
+    EXPECT_TRUE(isRealType(RMType_Double));
+
+    EXPECT_EQ(sizeOfRMType(RMType_Int8), 1);
+    EXPECT_EQ(sizeOfRMType(RMType_UInt8), 1);
+
+    EXPECT_EQ(sizeOfRMType(RMType_Int16), 2);
+    EXPECT_EQ(sizeOfRMType(RMType_UInt16), 2);
+    EXPECT_EQ(sizeOfRMType(RMType_HalfFloat), 2);
+
+    EXPECT_EQ(sizeOfRMType(RMType_Int32), 4);
+    EXPECT_EQ(sizeOfRMType(RMType_UInt32), 4);
+    EXPECT_EQ(sizeOfRMType(RMType_Float), 4);
+
+    EXPECT_EQ(sizeOfRMType(RMType_Int64), 8);
+    EXPECT_EQ(sizeOfRMType(RMType_UInt64), 8);
+    EXPECT_EQ(sizeOfRMType(RMType_Double), 8);
 
 }
