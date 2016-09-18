@@ -6,45 +6,29 @@
 #define RMPROPELLER_RMOBJECTPTR_HPP
 
 
-#include "../common/common.hpp"
-
-
+#include "RMObject.hpp"
 
 namespace rmengine {
 
-
-        class RMObjectPtr final : public RMObject  {
-            void* _ptr{nullptr};
-
-        public:
-            constexpr
-            RMObjectPtr(void* ptr) noexcept
-            :_ptr(ptr)
-            {
-            }
-
-            ~RMObjectPtr() {
-                if (_ptr) delete _ptr;
-            }
-
-
-        };
-
-
-    class RMObjectArrayPtr final : public RMObject {
-        void* _ptr{nullptr};
+    class RMObjectPtr final : public RMObject {
+        void *_ptr{nullptr};
 
     public:
         constexpr
-        RMObjectArrayPtr(void* ptr) noexcept
-                :_ptr(ptr)
-        {
-
+        RMObjectPtr(void *ptr) noexcept
+                : _ptr(ptr) {
         }
 
-        ~RMObjectArrayPtr() {
-            if (_ptr) delete[] _ptr;
+        ~RMObjectPtr() {
+            if (_ptr) free(_ptr);
         }
+
+        constexpr void* get() const noexcept {
+            return _ptr;
+        }
+
+
+
     };
 }
 

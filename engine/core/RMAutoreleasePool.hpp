@@ -5,28 +5,41 @@
 #ifndef RMPROPELLER_RMAUTORELEASEPOOL_HPP
 #define RMPROPELLER_RMAUTORELEASEPOOL_HPP
 
-#include "../common/common.hpp"
 
-#include <list>
+#include <forward_list>
 
 #include "RMObject.hpp"
 
 namespace rmengine {
 
-
     class RMAutoreleasePool {
-        std::list<RMObject**> objectlist;
+        std::forward_list<RMObject**> object_ref_list;
+        std::forward_list<RMObject*> objectlist;
 
     public:
-        void push(RMObject** object) {
-            objectlist.push_back(object);
+
+        inline
+        void push(RMObject** object) noexcept {
+            object_ref_list.push_front(object);
         }
 
-        void drain() {
+        inline
+        void push(RMObject* object) noexcept {
+            objectlist.push_front(object);
+        }
+
+        void drain() noexcept {
+            while (!object_ref_list.empty())
+            {
+                RMObject** obj = *object_ref_list.begin();
+                object_ref_list.pop_front();
+                rmRelease(obj);
+            }
+
             while (!objectlist.empty())
             {
-                RMObject** obj = objectlist.back();
-                objectlist.pop_back();
+                RMObject* obj = *objectlist.begin();
+                objectlist.pop_front();
                 rmRelease(obj);
             }
         }
@@ -38,13 +51,17 @@ namespace rmengine {
     };
 
 
-    void rmAutoRelease(RMObject **object, RMAutoreleasePool &pool) {
+    inline
+    void rmAutoRelease(RMObject **object, RMAutoreleasePool &pool) noexcept {
         pool.push(object);
     }
 
-    void rmAutoRelease(RMObject **object) {
+    inline
+    void rmAutoRelease(RMObject **object) noexcept {
         rmAutoRelease(object, RMAutoreleasePool::sharedInstance());
     }
+
+
 }
 
 

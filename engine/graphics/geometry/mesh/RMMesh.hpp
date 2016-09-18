@@ -7,8 +7,7 @@
 
 
 #include "../geometry_common.hpp"
-#include "RMVertexAttribute.hpp"
-#include "graphics/geometry/mesh/buffer/RMVertexBufferHeader.hpp"
+
 
 namespace rmengine {
 
@@ -20,8 +19,6 @@ namespace rmengine {
         } RMMeshType;
 
         class RMMesh {
-            RMMeshHeader _header{};
-            void* _meshData{nullptr};
             RMMeshType _type{RMMeshType_Static};
 
         };

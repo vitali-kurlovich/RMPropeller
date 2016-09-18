@@ -44,6 +44,10 @@ namespace rmengine {
     typedef rmmath::fmt2x2 mat2x2;
 
 
+    constexpr uint8 uint8_max = 255;
+    constexpr uint8 uint8_min = 0;
+
+
 
 }
 

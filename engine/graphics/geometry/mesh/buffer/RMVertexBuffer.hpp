@@ -18,13 +18,20 @@ namespace rmengine {
             RMVertexBufferHeader _header;
             uint32 _count{0};
             size_t _size{0};
-            void* _vertexData{nullptr};
-
+            RMObjectPtr* _buffer{nullptr};
         public:
+
+            virtual ~RMVertexBuffer() {
+                if (_buffer) rmRelease(_buffer);
+            }
+
             constexpr
             void* data() const noexcept {
-                return _vertexData;
+                return _buffer->get();
             }
+
+
+
         };
 
     }

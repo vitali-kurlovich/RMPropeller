@@ -18,6 +18,7 @@ namespace rmengine {
     static const uint8 __RMTypeSize_8 = 3;
 
     typedef enum : uint8 {
+        RMType_None     = 0,
         RMType_Int8     =  __RMTypeSize_1,
         RMType_UInt8    = (__RMTypeSize_1 | __RMTypeUnsignedBitFlag),
 

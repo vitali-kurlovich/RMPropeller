@@ -12,6 +12,8 @@
 #include <sstream>
 #include <sys/stat.h>
 
+#include "engine/common/common.hpp"
+
 #include "engine/opengl/graphics/viewport/RMGLViewport.hpp"
 #include "engine/opengl/graphics/procedural/VBOTorus.hpp"
 #include "engine/opengl/graphics/procedural/VBOAxis.hpp"
@@ -24,8 +26,11 @@
 
 #include "libs/math/rmvmath/utils/TQuaternionUtils.hpp"
 
-#include "engine/graphics/geometry/mesh/RMMesh.hpp"
+#include "engine/graphics/geometry/mesh/buffer/RMVertexBufferHeader.hpp"
 
+#include "engine/graphics/geometry/mesh/buffer/RMIndexBuffer.hpp"
+#include "engine/graphics/geometry/mesh/buffer/RMVertexBuffer.hpp"
+#include "engine/graphics/geometry/mesh/buffer/RMVertexBufferObject.hpp"
 
 using namespace rmengine;
 using namespace rmengine::graphics;
@@ -56,6 +61,20 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 }
 int main(void)
 {
+
+    std::cout <<"sizeof RMVertexAttributeItem: " << sizeof(RMVertexAttributeItem) << std::endl;
+
+    std::cout <<"sizeof RMVertexBufferHeader: " << sizeof(RMVertexBufferHeader) << std::endl;
+
+    std::cout <<"sizeof RMVertexBuffer: " << sizeof(RMVertexBuffer) << std::endl;
+    std::cout <<"sizeof RMIndexBuffer: " << sizeof(RMIndexBuffer) << std::endl;
+
+    std::cout <<"sizeof RMVertexBufferObject: " << sizeof(RMVertexBufferObject) << std::endl;
+
+
+
+
+
     GLFWwindow* window;
     glfwSetErrorCallback(error_callback);
     if (!glfwInit())
@@ -179,11 +198,6 @@ int main(void)
 
 
     //rotationQuaternion(0.f, vec3(0,0,1));
-
-    std::cout <<"sizeof RMVertexAttributeItem: " << sizeof(RMVertexAttributeItem) << std::endl;
-
-    std::cout <<"sizeof RMMeshHeader: " << sizeof(RMMeshHeader) << std::endl;
-
 
     while (!glfwWindowShouldClose(window))
     {

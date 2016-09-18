@@ -8,8 +8,6 @@
 #include "rmtypes.hpp"
 #include "RMType.hpp"
 #include "RMColorType.hpp"
-
-#include "../core/RMObject.hpp"
-#include "../core/RMObjectPtr.hpp"
+#include "core.hpp"
 
 #endif //RMPROPELLER_COMMON_HPP

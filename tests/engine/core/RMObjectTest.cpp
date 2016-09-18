@@ -5,9 +5,9 @@
 
 #include "gtest/gtest.h"
 
+
 #include <core/RMObject.hpp>
 #include <core/RMAutoreleasePool.hpp>
-
 
 using namespace rmengine;
 
@@ -40,7 +40,7 @@ TEST(AutoreleasePool, retain) {
     RMObject* objectA = new RMObject();
     RMObject* objectB = new RMObject();
 
-    rmRetain(&objectA);
+    rmRetain(objectA);
 
     EXPECT_EQ(rmRetainCount(objectA), 2);
     EXPECT_EQ(rmRetainCount(objectB), 1);
@@ -58,3 +58,4 @@ TEST(AutoreleasePool, retain) {
     EXPECT_EQ(rmRetainCount(objectA), 1);
     EXPECT_EQ(objectB, nullptr);
 }
+

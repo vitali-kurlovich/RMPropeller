@@ -14,16 +14,20 @@ namespace rmengine {
     namespace graphics {
 
         class  RMIndexBuffer : public RMObject {
-            RMIntegerType _type{RMIntegerType_U8};
-            uint32 _count{0};
+            RMObjectPtr* _buffer{nullptr};
             size_t _size{0};
-            void* _indexData{nullptr};
+            uint32 _count{0};
+            RMIntegerType _type{RMIntegerType_U8};
 
         public:
 
+            virtual ~RMIndexBuffer() {
+                if (_buffer) rmRelease(_buffer);
+            }
+
             constexpr
             void* data() const noexcept {
-                return _indexData;
+                return _buffer->get();
             }
 
             constexpr
