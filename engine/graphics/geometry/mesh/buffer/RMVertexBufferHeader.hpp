@@ -34,32 +34,47 @@ namespace rmengine {
                     RMVertexAttributeItem{RMVertexAttribute_None, RMAttributeElementSize_None, RMType_None},
                     RMVertexAttributeItem{RMVertexAttribute_None, RMAttributeElementSize_None, RMType_None}
             };
+
             uint16 _format{0};
-            uint8 _count{0};
             uint8 _size{0};
+            uint8 _count{0};
 
         public:
 
             constexpr
             RMVertexBufferHeader() noexcept {}
 
-            constexpr uint8 count() const noexcept {
+            constexpr
+            uint8 count() const noexcept {
                 return _count;
             }
 
-            constexpr uint8 format() const noexcept {
+            constexpr
+            uint8 format() const noexcept {
                 return _format;
             }
 
-            constexpr size_t size() const noexcept {
+            constexpr
+            size_t size() const noexcept {
                 return _size;
             }
 
-            constexpr RMVertexAttributeItem operator[](std::size_t index) const noexcept {
+            constexpr
+            bool supportAttribute(RMVertexAttribute attr) const noexcept {
+                return (_format & attr) != 0;
+            }
+
+            constexpr
+            RMVertexAttributeItem operator[](std::size_t index) const noexcept {
                 return _attrs[index];
             }
 
-            void set(RMVertexAttribute attr, RMType type, RMAttributeElementSize size) noexcept {
+            constexpr
+            RMVertexAttributeItem operator[](RMVertexAttribute attr) const noexcept {
+                return (_format & attr) != 0 ? _attrs[indexOf(attr)] : RMVertexAttributeItem{RMVertexAttribute_None, RMAttributeElementSize_None, RMType_None};
+            }
+
+            void set(RMVertexAttribute attr, RMAttributeElementSize size, RMType type) noexcept {
 
                 uint8 index = indexOf(attr);
                 if (index != uint8_max) {
@@ -87,7 +102,6 @@ namespace rmengine {
             void remove(RMVertexAttribute attr) noexcept {
                 uint8 index = indexOf(attr);
                 if (index != uint8_max) {
-
                     _format &= ~attr;
                     --_count;
                     _size = _attrs[index].offset;
@@ -128,10 +142,8 @@ namespace rmengine {
                        );
             }
 
-
             bool operator == (const RMVertexBufferHeader &header) const noexcept {
                 if (this == &header) return true;
-
                 if (_format == header._format && _size == header._size && _count == header._count) {
 
                     for (uint8 index = 0; index < _count; ++index) {
@@ -139,7 +151,6 @@ namespace rmengine {
                             return false;
                         }
                     }
-
                     return true;
                 }
                 return false;

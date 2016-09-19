@@ -13,20 +13,23 @@ namespace rmengine {
 
     namespace graphics {
 
-        class  RMIndexBuffer : public RMObject {
-            RMObjectPtr* _buffer{nullptr};
-            size_t _size{0};
+        class RMIndexBuffer : public RMObject {
+            RMObjectPtr *_buffer{nullptr};
             uint32 _count{0};
             RMIntegerType _type{RMIntegerType_U8};
-
         public:
+
+            RMIndexBuffer(RMObjectPtr *buffer, uint32 count, RMIntegerType type)  noexcept
+                    : _buffer(buffer), _count(count), _type(type) {
+                if (_buffer) rmRetain(_buffer);
+            }
 
             virtual ~RMIndexBuffer() {
                 if (_buffer) rmRelease(_buffer);
             }
 
             constexpr
-            void* data() const noexcept {
+            void *data() const noexcept {
                 return _buffer->get();
             }
 
@@ -37,7 +40,7 @@ namespace rmengine {
 
             constexpr
             size_t size() const noexcept {
-                return _size;
+                return _count * sizeOfRMType(_type);
             }
 
             constexpr

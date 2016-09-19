@@ -76,8 +76,16 @@ namespace rmengine {
         return (type & __RMTypeRealBitFlag) != 0;
     }
 
-    constexpr uint8 sizeOfRMType(RMType type) noexcept {
-        return 1 << (type & 0x03);
+    constexpr size_t sizeOfRMType(RMType type) noexcept {
+        return static_cast<size_t>( 1 << (type & 0x03));
+    }
+
+    constexpr size_t sizeOfRMType(RMIntegerType type) noexcept {
+        return static_cast<size_t>( 1 << (type & 0x03));
+    }
+
+    constexpr size_t sizeOfRMType(RMRealType type) noexcept {
+        return static_cast<size_t>( 1 << (type & 0x03));
     }
 
 }

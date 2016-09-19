@@ -68,7 +68,7 @@ namespace rmengine {
 
         };
 
-        constexpr bool operator==(const RMVertexAttributeItem &a, const RMVertexAttributeItem &b) {
+        constexpr bool operator == (const RMVertexAttributeItem &a, const RMVertexAttributeItem &b) {
             return a._attrs == b._attrs;
         }
 

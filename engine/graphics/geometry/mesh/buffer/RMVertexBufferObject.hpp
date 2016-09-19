@@ -22,10 +22,16 @@ namespace rmengine {
             RMIndexBuffer* _indexBuffer{nullptr};
 
         public:
-            constexpr
+
             RMVertexBufferObject(RMVertexBuffer* vertexBuffer, RMIndexBuffer* indexBuffer) noexcept
             : _vertexBuffer(vertexBuffer), _indexBuffer(indexBuffer)
             {
+                if (_vertexBuffer) {
+                    rmRetain(_vertexBuffer);
+                }
+                if (_indexBuffer) {
+                    rmRetain(_indexBuffer);
+                }
             }
 
             virtual ~RMVertexBufferObject() {

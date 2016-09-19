@@ -43,12 +43,23 @@ namespace rmengine {
     typedef rmmath::fmt3x3 mat3x3;
     typedef rmmath::fmt2x2 mat2x2;
 
+    constexpr int8 int8_min = -128;
+    constexpr int8 int8_max = 127;
 
-    constexpr uint8 uint8_max = 255;
     constexpr uint8 uint8_min = 0;
+    constexpr uint8 uint8_max = 255;
 
+    constexpr int16 int16_min = -32768;
+    constexpr int16 int16_max = 32767;
 
+    constexpr uint16 uint16_max = 65535;
+    constexpr uint16 uint16_min = 0;
 
+    constexpr int32 int32_min = -2147483647;
+    constexpr int32 int32_max = 2147483647;
+
+    constexpr uint32 uint32_min = 0;
+    constexpr uint32 uint32_max = 4294967295;
 }
 
 
