@@ -8,6 +8,7 @@ add_executable(RMPropellerEngineTest
         common/RMColorTypeTest.cpp
 
         core/RMObjectTest.cpp
+        core/system/memoryTest.cpp
 
         graphics/material/technique/pass/RMPassTest.cpp
         graphics/material/technique/pass/RMBlendTest.cpp

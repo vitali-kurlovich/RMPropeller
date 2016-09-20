@@ -10,4 +10,6 @@
 #include "RMColorType.hpp"
 #include "core.hpp"
 
+#include "../core/system/memory.hpp"
+
 #endif //RMPROPELLER_COMMON_HPP

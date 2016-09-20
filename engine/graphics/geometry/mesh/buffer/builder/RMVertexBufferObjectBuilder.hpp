@@ -60,7 +60,7 @@ namespace rmengine {
 
         public:
             RMVertexBufferObjectBuilder(const RMVertexBufferHeader &header, uint32 vertexCount)
-                    : _header(header), _vertexCount(vertexCount), _indexCount(vertexCount*3) {
+                    : _header(header), _vertexCount(vertexCount), _indexCount(vertexCount*3 - 6) {
 
                 _vertexBuffer = std::malloc(_header.size() * _vertexCount);
                 std::memset(_vertexBuffer, 0, _header.size() * _vertexCount);
@@ -91,10 +91,29 @@ namespace rmengine {
                 RMIndexBuffer* ib = nullptr;
 
                 if (_maxIndexPosition != uint32_max) {
-                    size_t buffer_size = sizeof(uint32) * (_maxIndexPosition + 1);
+
+                    auto type = integerTypeForCount(_maxIndexValue);
+                    const uint32 indexCount((_maxIndexPosition + 1));
+
+                    size_t buffer_size = sizeOfRMType(type) * indexCount;
+
                     indexBuffer = std::malloc(buffer_size);
-                    std::memcpy(indexBuffer, _indexBuffer, buffer_size);
-                    ib = new RMIndexBuffer(new RMObjectPtr(indexBuffer), _maxIndexPosition + 1, RMIntegerType_U32);
+
+                    switch (type) {
+                        case RMIntegerType_U8:
+                            memory::cpsmemcpy(static_cast<uint8*>(indexBuffer), _indexBuffer, indexCount);
+                            break;
+
+                        case RMIntegerType_U16:
+                            memory::cpsmemcpy(static_cast<uint16*>(indexBuffer), _indexBuffer, indexCount);
+                            break;
+
+                        default:
+                            std::memcpy(indexBuffer, _indexBuffer, buffer_size);
+                            break;
+                    }
+
+                    ib = new RMIndexBuffer(new RMObjectPtr(indexBuffer), indexCount, type);
                 }
 
                 return new RMVertexBufferObject(vb, ib);
@@ -177,7 +196,7 @@ namespace rmengine {
 
             RMVertexBufferObjectBuilder& setIndex(uint32 position, uint32 index) {
 
-                assert(_maxVertexPosition <= index);
+                assert(_maxVertexPosition >= index);
 
                 if (position >= _indexCount) {
                     rebaseIndexBuffer(position*16/9);
@@ -199,6 +218,16 @@ namespace rmengine {
                     _maxIndexValue = index;
                 }
                 return *this;
+            }
+
+            RMVertexBufferObjectBuilder& appendIndex(uint32 index) {
+                auto pos = lastIndexPosition();
+                if (pos == uint32_max) {
+                    pos = 0;
+                } else {
+                    ++pos;
+                }
+                return setIndex(pos, index);
             }
         };
 
@@ -230,7 +259,7 @@ namespace rmengine {
                         default:
                             break;
                     }
-                    
+
                     if (_maxVertexPosition == uint32_max) {
                         _maxVertexPosition = index;
                     } else if (_maxVertexPosition < index) {

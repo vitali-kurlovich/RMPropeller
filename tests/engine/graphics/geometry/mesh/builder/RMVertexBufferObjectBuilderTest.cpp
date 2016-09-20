@@ -422,11 +422,62 @@ TEST(RMVertexBufferObjectBuilder, recalcBuffer) {
 }
 
 
-
 TEST(RMVertexBufferObjectBuilder, build) {
     RMVertexBufferHeader header;
     header.set(RMVertexAttribute_Color, RMAttributeElementSize_1, RMType_Int8);
     RMVertexBufferObjectBuilder builder(header, 4);
 
+    builder.setVertex(0, RMVertexAttribute_Color, 1)
+            .setVertex(1, RMVertexAttribute_Color, 2)
+            .setVertex(2, RMVertexAttribute_Color, 3)
+            .setVertex(3, RMVertexAttribute_Color, 4)
+            .setVertex(4, RMVertexAttribute_Color, 5)
+            .setVertex(5, RMVertexAttribute_Color, 6);
 
+    builder.appendIndex(0).appendIndex(2).appendIndex(3);
+
+    auto vbo = builder.build();
+
+    EXPECT_EQ(vbo->indexBuffer()->count(), 3);
+    EXPECT_EQ(vbo->vertexBuffer()->size(), 4);
+
+    builder.appendIndex(2).appendIndex(0).appendIndex(1);
+    vbo = builder.build();
+
+    EXPECT_EQ(vbo->indexBuffer()->count(), 6);
+    EXPECT_EQ(vbo->vertexBuffer()->size(), 4);
+
+    builder.appendIndex(5).appendIndex(4).appendIndex(3);
+
+    vbo = builder.build();
+
+    EXPECT_EQ(vbo->indexBuffer()->count(), 9);
+    EXPECT_EQ(vbo->vertexBuffer()->size(), 6);
+
+
+    EXPECT_EQ(vbo->indexBuffer()->type(), RMIntegerType_U8);
+    EXPECT_EQ(vbo->indexBuffer()->size(), 9);
+
+    builder.setVertex(256, RMVertexAttribute_Color, 256);
+    builder.appendIndex(256);
+
+    vbo = builder.build();
+
+    EXPECT_EQ(vbo->indexBuffer()->count(), 10);
+    EXPECT_EQ(vbo->vertexBuffer()->size(), 257);
+
+    EXPECT_EQ(vbo->indexBuffer()->type(), RMIntegerType_U16);
+    EXPECT_EQ(vbo->indexBuffer()->size(), 20);
+
+
+    builder.setVertex(66000, RMVertexAttribute_Color, 256);
+    builder.appendIndex(66000);
+
+    vbo = builder.build();
+
+    EXPECT_EQ(vbo->indexBuffer()->count(), 11);
+    EXPECT_EQ(vbo->vertexBuffer()->size(), 66001);
+
+    EXPECT_EQ(vbo->indexBuffer()->type(), RMIntegerType_U32);
+    EXPECT_EQ(vbo->indexBuffer()->size(), 44);
 }
