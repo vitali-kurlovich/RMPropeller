@@ -32,12 +32,14 @@ namespace rmengine {
 
             uint32 _lastVertexPosition{0};
             uint32 _lastIndexPosition{0};
+
             uint32 _maxVertexPosition{uint32_max};
             uint32 _maxIndexPosition{uint32_max};
 
+            uint32 _maxIndexValue{uint32_max};
+
             void *_vertexBuffer{nullptr};
-            void *_indexBuffer{nullptr};
-            RMIntegerType _indexType{RMIntegerType_U16};
+            uint32 *_indexBuffer{nullptr};
 
             constexpr RMIntegerType integerTypeForCount(uint32 count) const noexcept {
                 return count <= uint8_max ? RMIntegerType_U8 :
@@ -52,16 +54,20 @@ namespace rmengine {
                 return static_cast<void *>(buffer);
             }
 
+            void rebaseVertexBuffer(uint32 vertexCount) noexcept;
+            void rebaseIndexBuffer(uint32 vertexCount) noexcept;
+
+
         public:
-            RMVertexBufferObjectBuilder(const RMVertexBufferHeader &header, uint32 vertexCount, uint32 indexCount)
-                    : _header(header), _vertexCount(vertexCount), _indexCount(indexCount),
-                      _indexType(integerTypeForCount(indexCount)) {
+            RMVertexBufferObjectBuilder(const RMVertexBufferHeader &header, uint32 vertexCount)
+                    : _header(header), _vertexCount(vertexCount), _indexCount(vertexCount*3) {
 
                 _vertexBuffer = std::malloc(_header.size() * _vertexCount);
                 std::memset(_vertexBuffer, 0, _header.size() * _vertexCount);
 
-                _indexBuffer = std::malloc(sizeOfRMType(_indexType) * _indexCount);
-                std::memset(_indexBuffer, 0, sizeOfRMType(_indexType) * _indexCount);
+                size_t indexBufferSize = sizeof(uint32) * _indexCount;
+                _indexBuffer = static_cast<uint32*>(std::malloc(indexBufferSize));
+                std::memset(_indexBuffer, 0, indexBufferSize);
             }
 
             ~RMVertexBufferObjectBuilder() {
@@ -70,22 +76,48 @@ namespace rmengine {
             }
 
             const RMVertexBufferObject *build() {
+
                 void *vertexBuffer = nullptr;
                 RMVertexBuffer *vb = nullptr;
-                if (_maxVertexPosition != uint32_max) {
-                    size_t buffer_size = _header.size() * (_maxVertexPosition + 1);
+                if (_maxVertexPosition != uint32_max && _maxIndexPosition != uint32_max) {
+                    size_t buffer_size = _header.size() * (_maxIndexValue + 1);
                     vertexBuffer = std::malloc(buffer_size);
                     std::memcpy(vertexBuffer, _vertexBuffer, buffer_size);
-                    vb = new RMVertexBuffer(_header, new RMObjectPtr(vertexBuffer), _maxVertexPosition + 1);
+                    vb = new RMVertexBuffer(_header, new RMObjectPtr(vertexBuffer), _maxIndexValue + 1);
                 }
 
 
-                ;
-                auto ib = new RMIndexBuffer(new RMObjectPtr(_indexBuffer), _indexCount, _indexType);
-                //_vertexBuffer = nullptr;
-                //_indexBuffer = nullptr;
+                void* indexBuffer = nullptr;
+                RMIndexBuffer* ib = nullptr;
+
+                if (_maxIndexPosition != uint32_max) {
+                    size_t buffer_size = sizeof(uint32) * (_maxIndexPosition + 1);
+                    indexBuffer = std::malloc(buffer_size);
+                    std::memcpy(indexBuffer, _indexBuffer, buffer_size);
+                    ib = new RMIndexBuffer(new RMObjectPtr(indexBuffer), _maxIndexPosition + 1, RMIntegerType_U32);
+                }
 
                 return new RMVertexBufferObject(vb, ib);
+            }
+
+            constexpr
+            uint32 vertexCount() const noexcept {
+                return _maxVertexPosition == uint32_max ? 0 : (_maxVertexPosition + 1);
+            }
+
+            constexpr
+            uint32 indexesCount() const noexcept {
+                return _maxIndexPosition == uint32_max ? 0 : (_maxIndexPosition + 1);
+            }
+
+            constexpr
+            uint32 lastVertexPosition() const noexcept {
+                return vertexCount() > 0 ? _lastVertexPosition : uint32_max;
+            }
+
+            constexpr
+            uint32 lastIndexPosition() const noexcept {
+                return indexesCount() > 0 ? _lastIndexPosition : uint32_max ;
             }
 
             RMVertexBufferObjectBuilder &
@@ -143,16 +175,45 @@ namespace rmengine {
                 return setVertex(_lastVertexPosition, attr, v);
             }
 
-            void setIndex(uint32 position, uint32 index) {
+            RMVertexBufferObjectBuilder& setIndex(uint32 position, uint32 index) {
 
+                assert(_maxVertexPosition <= index);
+
+                if (position >= _indexCount) {
+                    rebaseIndexBuffer(position*16/9);
+                }
+
+                _indexBuffer[position] = index;
+
+                _lastIndexPosition = position;
+
+                if (_maxIndexPosition == uint32_max) {
+                    _maxIndexPosition = position;
+                } else if (_maxIndexPosition < position) {
+                    _maxIndexPosition = position;
+                }
+
+                if (_maxIndexValue == uint32_max) {
+                    _maxIndexValue = index;
+                } else if (index > _maxIndexValue) {
+                    _maxIndexValue = index;
+                }
+                return *this;
             }
-
         };
 
         RMVertexBufferObjectBuilder &
         RMVertexBufferObjectBuilder::setVertex(size_t index, RMVertexAttribute attr, float x, float y, float z,
                                                float w) noexcept {
+
+            _lastVertexPosition = index;
+
             if (_header.supportAttribute(attr)) {
+
+                if (index >= _vertexCount) {
+                    rebaseVertexBuffer(index*16/9);
+                }
+
                 auto item = _header[attr];
 
                 if (isRealType(item.type)) {
@@ -169,8 +230,7 @@ namespace rmengine {
                         default:
                             break;
                     }
-
-                    _lastVertexPosition = index;
+                    
                     if (_maxVertexPosition == uint32_max) {
                         _maxVertexPosition = index;
                     } else if (_maxVertexPosition < index) {
@@ -202,7 +262,15 @@ namespace rmengine {
         RMVertexBufferObjectBuilder::setVertex(size_t index, RMVertexAttribute attr, uint32 x, uint32 y, uint32 z,
                                                uint32 w) noexcept {
 
+
+            _lastVertexPosition = index;
+
             if (_header.supportAttribute(attr)) {
+
+                if (index >= _vertexCount) {
+                    rebaseVertexBuffer(index*16/9);
+                }
+
                 auto item = _header[attr];
 
                 if (isIntegerType(item.type)) {
@@ -239,7 +307,6 @@ namespace rmengine {
                                 break;
                         }
 
-                        _lastVertexPosition = index;
                         if (_maxVertexPosition == uint32_max) {
                             _maxVertexPosition = index;
                         } else if (_maxVertexPosition < index) {
@@ -268,7 +335,14 @@ namespace rmengine {
         RMVertexBufferObjectBuilder::setVertex(size_t index, RMVertexAttribute attr, int32 x, int32 y, int32 z,
                                                int32 w) noexcept {
 
+            _lastVertexPosition = index;
+
             if (_header.supportAttribute(attr)) {
+
+                if (index >= _vertexCount) {
+                    rebaseVertexBuffer(index*16/9);
+                }
+
                 auto item = _header[attr];
 
                 if (isIntegerType(item.type)) {
@@ -304,7 +378,7 @@ namespace rmengine {
                                 break;
                         }
 
-                        _lastVertexPosition = index;
+
                         if (_maxVertexPosition == uint32_max) {
                             _maxVertexPosition = index;
                         } else if (_maxVertexPosition < index) {
@@ -328,6 +402,37 @@ namespace rmengine {
 
             }
             return *this;
+        }
+
+        void RMVertexBufferObjectBuilder::rebaseVertexBuffer(uint32 vertexCount) noexcept {
+            if (_vertexCount < vertexCount) {
+
+                size_t bufferSize(_header.size() * vertexCount);
+                auto buffer = std::malloc(bufferSize);
+
+                std::memset(buffer, 0, bufferSize);
+                std::memcpy(buffer, _vertexBuffer, _header.size() * (_maxVertexPosition + 1));
+
+                std::swap(buffer, _vertexBuffer);
+                free(buffer);
+
+                _vertexCount = vertexCount;
+            }
+        }
+
+        void RMVertexBufferObjectBuilder::rebaseIndexBuffer(uint32 indexCount) noexcept {
+          if (_indexCount < indexCount) {
+              size_t bufferSize(sizeof(uint32) * indexCount);
+
+              auto buffer = static_cast<uint32*>(std::malloc(bufferSize));
+
+              std::memset(buffer, 0, bufferSize);
+              std::memcpy(buffer, _indexBuffer, sizeof(uint32) *  (_maxIndexPosition + 1));
+
+              std::swap(buffer, _indexBuffer);
+
+              _indexCount = indexCount;
+          }
         }
     }
 }
