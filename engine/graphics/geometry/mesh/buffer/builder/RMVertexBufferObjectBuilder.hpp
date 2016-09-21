@@ -229,6 +229,11 @@ namespace rmengine {
                 }
                 return setIndex(pos, index);
             }
+
+            RMVertexBufferObjectBuilder& appendPolygon(uint32 a, uint32 b, uint32 c) {
+                return appendIndex(a).appendIndex(b).appendIndex(c);
+            }
+
         };
 
         RMVertexBufferObjectBuilder &

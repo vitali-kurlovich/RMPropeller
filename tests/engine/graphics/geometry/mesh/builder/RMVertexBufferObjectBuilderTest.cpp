@@ -447,7 +447,7 @@ TEST(RMVertexBufferObjectBuilder, build) {
     EXPECT_EQ(vbo->indexBuffer()->count(), 6);
     EXPECT_EQ(vbo->vertexBuffer()->size(), 4);
 
-    builder.appendIndex(5).appendIndex(4).appendIndex(3);
+    builder.appendPolygon(5, 4, 3);
 
     vbo = builder.build();
 
