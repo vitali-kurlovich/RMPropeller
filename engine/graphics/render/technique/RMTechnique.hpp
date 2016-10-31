@@ -6,7 +6,7 @@
 #define RMPROPELLER_RMTECHNIQUE_HPP
 
 
-#include "../material_common.hpp"
+#include "graphics/material/material_common.hpp"
 
 #include "pass/RMPass.hpp"
 

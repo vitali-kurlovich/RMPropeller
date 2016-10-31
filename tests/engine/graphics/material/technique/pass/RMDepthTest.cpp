@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 
 
-#include <graphics/material/technique/RMTechnique.hpp>
+#include <graphics/render/RMDepth.hpp>
 
 
 using namespace rmengine::graphics;
@@ -13,24 +13,24 @@ using namespace rmengine::graphics;
 TEST(RMDepthTest, constructor) {
     RMDepth a;
 
-    EXPECT_TRUE(a.write);
-    EXPECT_EQ(a.depthFunc, RMDepthFunc_Less);
+    EXPECT_TRUE(a.isRequireWrite());
+    EXPECT_EQ(a.getDepthFunc(), RMDepth::RMDepthFunc_Less);
 
 
     RMDepth b(false);
-    EXPECT_FALSE(b.write);
-    EXPECT_EQ(b.depthFunc, RMDepthFunc_Less);
+    EXPECT_FALSE(b.isRequireWrite());
+    EXPECT_EQ(b.getDepthFunc(), RMDepth::RMDepthFunc_Less);
 
     EXPECT_NE(a, b);
 
 
-    RMDepth c(false, RMDepthFunc_Greater);
+    RMDepth c(false, RMDepth::RMDepthFunc_Greater);
 
     EXPECT_NE(a, c);
     EXPECT_NE(b, c);
 
-    EXPECT_FALSE(c.write);
-    EXPECT_EQ(c.depthFunc, RMDepthFunc_Greater);
+    EXPECT_FALSE(c.isRequireWrite());
+    EXPECT_EQ(c.getDepthFunc(), RMDepth::RMDepthFunc_Greater);
 
     a = c;
 

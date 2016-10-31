@@ -5,16 +5,18 @@
 #include "gtest/gtest.h"
 
 #include <graphics/geometry/mesh/buffer/builder/RMVertexBufferObjectBuilder.hpp>
-
+#include <graphics/geometry/mesh/buffer/builder/RMVertexBufferHeaderBuilder.hpp>
 
 using namespace rmengine;
 using namespace graphics;
 
 TEST(RMVertexBufferObjectBuilder, V3fN3f) {
 
-    RMVertexBufferHeader header;
-    header.set(RMVertexAttribute_Position, RMAttributeElementSize_3, RMType_Float);
-    header.set(RMVertexAttribute_Normal, RMAttributeElementSize_3, RMType_Float);
+    auto header =
+    RMVertexBufferHeaderBuilder{}
+            .append(RMVertexAttribute_Position, RMAttributeElementSize_3, RMType_Float)
+            .append(RMVertexAttribute_Normal, RMAttributeElementSize_3, RMType_Float).build();
+
 
     RMVertexBufferObjectBuilder builder(header, 32);
 
@@ -56,12 +58,14 @@ TEST(RMVertexBufferObjectBuilder, V3fN3f) {
 
 }
 
+
 TEST(RMVertexBufferObjectBuilder, V3fN2usC1iUV4b) {
-    RMVertexBufferHeader header;
-    header.set(RMVertexAttribute_Position, RMAttributeElementSize_4, RMType_Float);
-    header.set(RMVertexAttribute_Normal, RMAttributeElementSize_2, RMType_UInt16);
-    header.set(RMVertexAttribute_UV3, RMAttributeElementSize_4, RMType_Int8);
-    header.set(RMVertexAttribute_Color, RMAttributeElementSize_1, RMType_Int32);
+    RMVertexBufferHeader header =
+    RMVertexBufferHeaderBuilder{}
+            .append(RMVertexAttribute_Position, RMAttributeElementSize_4, RMType_Float)
+            .append(RMVertexAttribute_Normal, RMAttributeElementSize_2, RMType_UInt16)
+            .append(RMVertexAttribute_Color, RMAttributeElementSize_1, RMType_Int32)
+            .append(RMVertexAttribute_UV3, RMAttributeElementSize_4, RMType_Int8).build();
 
     RMVertexBufferObjectBuilder builder(header, 32);
 
@@ -94,14 +98,6 @@ TEST(RMVertexBufferObjectBuilder, V3fN2usC1iUV4b) {
 
     auto vb = builder.build()->vertexBuffer();
     vertex *buffer = static_cast<vertex*>(vb->data());
-
-
-    EXPECT_EQ(vb->attrCount(), 4);
-    EXPECT_EQ(vb->attr(0), RMVertexAttributeItem(RMVertexAttribute_Position, RMAttributeElementSize_4, RMType_Float, 0));
-    EXPECT_EQ(vb->attr(1), RMVertexAttributeItem(RMVertexAttribute_Normal, RMAttributeElementSize_2, RMType_UInt16, 16));
-    EXPECT_EQ(vb->attr(2), RMVertexAttributeItem(RMVertexAttribute_Color, RMAttributeElementSize_1, RMType_Int32, 20));
-    EXPECT_EQ(vb->attr(3), RMVertexAttributeItem(RMVertexAttribute_UV3, RMAttributeElementSize_4, RMType_Int8, 24));
-
 
     EXPECT_EQ(vb->size()/(4*4 + 2*2 + 4 + 4), 3);
 
@@ -261,11 +257,13 @@ TEST(RMVertexBufferObjectBuilder, V3fN2usC1iUV4b) {
 
 TEST(RMVertexBufferObjectBuilder, recalcBuffer) {
 
-    RMVertexBufferHeader header;
-    header.set(RMVertexAttribute_Position, RMAttributeElementSize_4, RMType_Float);
-    header.set(RMVertexAttribute_Normal, RMAttributeElementSize_2, RMType_UInt16);
-    header.set(RMVertexAttribute_UV3, RMAttributeElementSize_4, RMType_Int8);
-    header.set(RMVertexAttribute_Color, RMAttributeElementSize_1, RMType_Int32);
+    auto header =
+    RMVertexBufferHeaderBuilder{}
+    .append(RMVertexAttribute_Position, RMAttributeElementSize_4, RMType_Float)
+    .append(RMVertexAttribute_Normal, RMAttributeElementSize_2, RMType_UInt16)
+    .append(RMVertexAttribute_Color, RMAttributeElementSize_1, RMType_Int32)
+    .append(RMVertexAttribute_UV3, RMAttributeElementSize_4, RMType_Int8).build();
+
 
     RMVertexBufferObjectBuilder builder(header, 4);
 
@@ -423,8 +421,9 @@ TEST(RMVertexBufferObjectBuilder, recalcBuffer) {
 
 
 TEST(RMVertexBufferObjectBuilder, build) {
-    RMVertexBufferHeader header;
-    header.set(RMVertexAttribute_Color, RMAttributeElementSize_1, RMType_Int8);
+    auto header = RMVertexBufferHeaderBuilder{}
+    .append(RMVertexAttribute_Color, RMAttributeElementSize_1, RMType_Int8).build();
+
     RMVertexBufferObjectBuilder builder(header, 4);
 
     builder.setVertex(0, RMVertexAttribute_Color, 1)
@@ -438,24 +437,24 @@ TEST(RMVertexBufferObjectBuilder, build) {
 
     auto vbo = builder.build();
 
-    EXPECT_EQ(vbo->indexBuffer()->count(), 3);
+    EXPECT_EQ(vbo->indexBuffer()->count, 3);
     EXPECT_EQ(vbo->vertexBuffer()->size(), 4);
 
     builder.appendIndex(2).appendIndex(0).appendIndex(1);
     vbo = builder.build();
 
-    EXPECT_EQ(vbo->indexBuffer()->count(), 6);
+    EXPECT_EQ(vbo->indexBuffer()->count, 6);
     EXPECT_EQ(vbo->vertexBuffer()->size(), 4);
 
     builder.appendPolygon(5, 4, 3);
 
     vbo = builder.build();
 
-    EXPECT_EQ(vbo->indexBuffer()->count(), 9);
+    EXPECT_EQ(vbo->indexBuffer()->count, 9);
     EXPECT_EQ(vbo->vertexBuffer()->size(), 6);
 
 
-    EXPECT_EQ(vbo->indexBuffer()->type(), RMIntegerType_U8);
+    EXPECT_EQ(vbo->indexBuffer()->type, RMIntegerType_U8);
     EXPECT_EQ(vbo->indexBuffer()->size(), 9);
 
     builder.setVertex(256, RMVertexAttribute_Color, 256);
@@ -463,10 +462,10 @@ TEST(RMVertexBufferObjectBuilder, build) {
 
     vbo = builder.build();
 
-    EXPECT_EQ(vbo->indexBuffer()->count(), 10);
+    EXPECT_EQ(vbo->indexBuffer()->count, 10);
     EXPECT_EQ(vbo->vertexBuffer()->size(), 257);
 
-    EXPECT_EQ(vbo->indexBuffer()->type(), RMIntegerType_U16);
+    EXPECT_EQ(vbo->indexBuffer()->type, RMIntegerType_U16);
     EXPECT_EQ(vbo->indexBuffer()->size(), 20);
 
 
@@ -475,9 +474,10 @@ TEST(RMVertexBufferObjectBuilder, build) {
 
     vbo = builder.build();
 
-    EXPECT_EQ(vbo->indexBuffer()->count(), 11);
+    EXPECT_EQ(vbo->indexBuffer()->count, 11);
     EXPECT_EQ(vbo->vertexBuffer()->size(), 66001);
 
-    EXPECT_EQ(vbo->indexBuffer()->type(), RMIntegerType_U32);
+    EXPECT_EQ(vbo->indexBuffer()->type, RMIntegerType_U32);
     EXPECT_EQ(vbo->indexBuffer()->size(), 44);
 }
+

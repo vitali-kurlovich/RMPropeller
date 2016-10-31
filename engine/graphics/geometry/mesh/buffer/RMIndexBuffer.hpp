@@ -15,12 +15,12 @@ namespace rmengine {
 
         class RMIndexBuffer : public RMObject {
             RMObjectPtr *_buffer{nullptr};
-            uint32 _count{0};
-            RMIntegerType _type{RMIntegerType_U8};
         public:
+            const uint32 count{0};
+            const RMIntegerType type{RMIntegerType_U8};
 
-            RMIndexBuffer(RMObjectPtr *buffer, uint32 count, RMIntegerType type)  noexcept
-                    : _buffer(buffer), _count(count), _type(type) {
+            RMIndexBuffer(RMObjectPtr *buffer, uint32 count, RMIntegerType type) noexcept
+                    : _buffer(buffer), count(count), type(type) {
                 if (_buffer) rmRetain(_buffer);
             }
 
@@ -29,24 +29,16 @@ namespace rmengine {
             }
 
             constexpr
-            void *data() const noexcept {
-                return _buffer->get();
-            }
-
-            constexpr
-            uint32 count() const noexcept {
-                return _count;
+            void* data() const noexcept {
+                return _buffer ? _buffer->get() : nullptr;
             }
 
             constexpr
             size_t size() const noexcept {
-                return _count * sizeOfRMType(_type);
+                return count * sizeOfRMType(type);
             }
 
-            constexpr
-            RMIntegerType type() const noexcept {
-                return _type;
-            }
+
         };
 
     }

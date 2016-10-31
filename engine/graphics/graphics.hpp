@@ -6,7 +6,7 @@
 #define RMPROPELLER_GRAPHICS_HPP
 
 
-#include "graphics/material/technique/program/RMShaderProgram.hpp"
+#include "graphics/material/program/RMShaderProgram.hpp"
 
 #include "viewport/RMViewport.hpp"
 

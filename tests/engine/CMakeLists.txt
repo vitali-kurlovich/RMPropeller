@@ -22,6 +22,7 @@ add_executable(RMPropellerEngineTest
         graphics/geometry/mesh/RMVertexBufferHeaderTest.cpp
 
         graphics/geometry/mesh/builder/RMVertexBufferObjectBuilderTest.cpp
+        graphics/geometry/mesh/builder/RMVertexBufferHeaderBuilderTest.cpp
 
         graphics/texture/RMTextureTest.cpp
 

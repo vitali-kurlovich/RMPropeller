@@ -73,8 +73,6 @@ int main(void)
 
 
 
-
-
     GLFWwindow* window;
     glfwSetErrorCallback(error_callback);
     if (!glfwInit())

@@ -5,6 +5,8 @@
 #ifndef RMPROPELLER_COMMON_HPP
 #define RMPROPELLER_COMMON_HPP
 
+#include <assert.h>
+
 #include "rmtypes.hpp"
 #include "RMType.hpp"
 #include "RMColorType.hpp"

@@ -8,11 +8,18 @@
 
 #include "../graphics_common.hpp"
 
+#include "RMBlend.hpp"
+#include "RMDepth.hpp"
+
+
+
 namespace rmengine {
 
     namespace graphics {
 
         class RMRenderContext {
+
+        public:
 
         };
     }

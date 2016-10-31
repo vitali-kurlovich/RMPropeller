@@ -41,7 +41,8 @@ namespace rmengine {
             void *_vertexBuffer{nullptr};
             uint32 *_indexBuffer{nullptr};
 
-            constexpr RMIntegerType integerTypeForCount(uint32 count) const noexcept {
+            constexpr
+            RMIntegerType integerTypeForCount(uint32 count) const noexcept {
                 return count <= uint8_max ? RMIntegerType_U8 :
                        (count <= uint16_max ? RMIntegerType_U16 :
                         (count <= uint32_max ? RMIntegerType_U32 : RMIntegerType_U64));
@@ -85,7 +86,6 @@ namespace rmengine {
                     std::memcpy(vertexBuffer, _vertexBuffer, buffer_size);
                     vb = new RMVertexBuffer(_header, new RMObjectPtr(vertexBuffer), _maxIndexValue + 1);
                 }
-
 
                 void* indexBuffer = nullptr;
                 RMIndexBuffer* ib = nullptr;

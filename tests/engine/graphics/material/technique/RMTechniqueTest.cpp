@@ -5,7 +5,7 @@
 
 #include "gtest/gtest.h"
 
-#include <graphics/material/technique/RMTechnique.hpp>
+#include <graphics/render/technique/RMTechnique.hpp>
 
 
 using namespace rmengine::graphics;

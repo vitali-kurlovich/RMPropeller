@@ -47,12 +47,12 @@ namespace rmengine {
         struct RMVertexAttributeItem final {
             union {
                 struct {
-                    RMVertexAttribute attribute:13;
-                    RMAttributeElementSize size:3;
-                    RMType type;
-                    uint8 offset;
+                    const RMVertexAttribute attribute:13;
+                    const RMAttributeElementSize size:3;
+                    const RMType type;
+                    const uint8 offset;
                 };
-                uint32 _attrs;
+                const uint32 attrs;
             };
 
         public:
@@ -66,24 +66,30 @@ namespace rmengine {
 
             }
 
+            static const RMVertexAttributeItem& none() noexcept {
+                static const RMVertexAttributeItem none(RMVertexAttribute_None, RMAttributeElementSize_None, RMType_None, 0);
+                return none;
+            }
         };
 
-        constexpr bool operator == (const RMVertexAttributeItem &a, const RMVertexAttributeItem &b) {
-            return a._attrs == b._attrs;
+        constexpr
+        bool operator == (const RMVertexAttributeItem &a, const RMVertexAttributeItem &b) {
+            return a.attrs == b.attrs;
         }
 
-        constexpr bool operator!=(const RMVertexAttributeItem &a, const RMVertexAttributeItem &b) {
+        constexpr
+        bool operator != (const RMVertexAttributeItem &a, const RMVertexAttributeItem &b) {
             return !(a == b);
         }
 
 
         constexpr bool operator < (const RMVertexAttributeItem &a, const RMVertexAttributeItem &b) {
-            return a._attrs != b._attrs &&
+            return a.attrs != b.attrs &&
                     (a.attribute == b.attribute ? (a.size == b.size ? (a.offset == b.offset ? (a.type == b.type ? false : a.type < b.type) : a.offset < b.offset) : a.size < b.size) : a.attribute < b.attribute);
         }
 
         constexpr bool operator > (const RMVertexAttributeItem &a, const RMVertexAttributeItem &b) {
-            return a._attrs != b._attrs &&
+            return a.attrs != b.attrs &&
                    (a.attribute == b.attribute ? (a.size == b.size ? (a.offset == b.offset ? (a.type == b.type ? false : a.type > b.type) : a.offset > b.offset) : a.size > b.size) : a.attribute > b.attribute);
         }
     }
