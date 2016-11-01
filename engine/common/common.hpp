@@ -10,6 +10,7 @@
 #include "rmtypes.hpp"
 #include "RMType.hpp"
 #include "RMColorType.hpp"
+#include "RMRange.hpp"
 #include "core.hpp"
 
 #include "../core/system/memory.hpp"

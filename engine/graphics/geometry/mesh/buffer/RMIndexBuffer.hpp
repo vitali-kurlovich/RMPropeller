@@ -7,37 +7,26 @@
 
 
 #include "../../geometry_common.hpp"
-
+#include "RMBuffer.hpp"
+#include "RMIndexBufferHeader.hpp"
 
 namespace rmengine {
 
     namespace graphics {
 
-        class RMIndexBuffer : public RMObject {
-            RMObjectPtr *_buffer{nullptr};
+        class RMIndexBuffer : public RMBuffer {
         public:
-            const uint32 count{0};
-            const RMIntegerType type{RMIntegerType_U8};
 
-            RMIndexBuffer(RMObjectPtr *buffer, uint32 count, RMIntegerType type) noexcept
-                    : _buffer(buffer), count(count), type(type) {
-                if (_buffer) rmRetain(_buffer);
-            }
+            const RMIndexBufferHeader header;
 
-            virtual ~RMIndexBuffer() {
-                if (_buffer) rmRelease(_buffer);
-            }
-
-            constexpr
-            void* data() const noexcept {
-                return _buffer ? _buffer->get() : nullptr;
+            RMIndexBuffer(RMObjectPtr *buffer, uint32 count, const RMIndexBufferHeader& header, RMUsage usage = RMUsageStaticDraw) noexcept
+                    :  RMBuffer::RMBuffer( buffer, count, usage), header(header) {
             }
 
             constexpr
             size_t size() const noexcept {
-                return count * sizeOfRMType(type);
+                return count * sizeOfRMType(header.type);
             }
-
 
         };
 

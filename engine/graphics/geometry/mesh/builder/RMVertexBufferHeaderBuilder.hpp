@@ -8,8 +8,8 @@
 #include "graphics/geometry/geometry_common.hpp"
 #include <algorithm>
 
-#include "../RMVertexAttribute.hpp"
-#include "../RMVertexBufferHeader.hpp"
+#include "graphics/geometry/mesh/buffer/RMVertexAttribute.hpp"
+#include "graphics/geometry/mesh/buffer/RMVertexBufferHeader.hpp"
 
 namespace rmengine {
 

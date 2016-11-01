@@ -4,8 +4,8 @@
 
 #include "gtest/gtest.h"
 
-#include <graphics/geometry/mesh/buffer/builder/RMVertexBufferObjectBuilder.hpp>
-#include <graphics/geometry/mesh/buffer/builder/RMVertexBufferHeaderBuilder.hpp>
+#include <graphics/geometry/mesh/builder/RMVertexBufferObjectBuilder.hpp>
+#include <graphics/geometry/mesh/builder/RMVertexBufferHeaderBuilder.hpp>
 
 using namespace rmengine;
 using namespace graphics;
@@ -96,8 +96,13 @@ TEST(RMVertexBufferObjectBuilder, V3fN2usC1iUV4b) {
         int8 uvx, uvy, uvz, uvw;
     };
 
-    auto vb = builder.build()->vertexBuffer();
+    auto vbo = builder.build();
+    auto vb = vbo->vertexBuffer();
     vertex *buffer = static_cast<vertex*>(vb->data());
+
+    auto range = RMRange<uint32>(2,1);
+    EXPECT_EQ(range,vbo->indexBuffer()->header.range);
+    EXPECT_EQ(vbo->indexBuffer()->header.type, RMIntegerType_U8);
 
     EXPECT_EQ(vb->size()/(4*4 + 2*2 + 4 + 4), 3);
 
@@ -295,9 +300,10 @@ TEST(RMVertexBufferObjectBuilder, recalcBuffer) {
             .setVertex(RMVertexAttribute_Position, vec4(-55.f,66.f,-77.f,88.f));
 
     builder.setIndex(0, 512);
+    builder.setIndex(1, 12);
 
     EXPECT_EQ(builder.vertexCount(), 513);
-    EXPECT_EQ(builder.indexesCount(), 1);
+    EXPECT_EQ(builder.indexesCount(), 2);
 
     using vertex = struct {
         vec4 pos;
@@ -306,8 +312,14 @@ TEST(RMVertexBufferObjectBuilder, recalcBuffer) {
         int8 uvx, uvy, uvz, uvw;
     };
 
-    auto vb = builder.build()->vertexBuffer();
+    auto vbo = builder.build();
+    auto vb = vbo->vertexBuffer();
     auto buffer = static_cast<vertex*>(vb->data());
+
+
+    auto range = RMRange<uint32>(12,512-12+1);
+    EXPECT_EQ(range,vbo->indexBuffer()->header.range);
+    EXPECT_EQ(vbo->indexBuffer()->header.type, RMIntegerType_U16);
 
     EXPECT_EQ(buffer[0].pos, vec4(1.f,2.f,3.f,4.f));
     EXPECT_EQ(buffer[0].nx, 0);
@@ -454,7 +466,7 @@ TEST(RMVertexBufferObjectBuilder, build) {
     EXPECT_EQ(vbo->vertexBuffer()->size(), 6);
 
 
-    EXPECT_EQ(vbo->indexBuffer()->type, RMIntegerType_U8);
+    EXPECT_EQ(vbo->indexBuffer()->header.type, RMIntegerType_U8);
     EXPECT_EQ(vbo->indexBuffer()->size(), 9);
 
     builder.setVertex(256, RMVertexAttribute_Color, 256);
@@ -465,7 +477,7 @@ TEST(RMVertexBufferObjectBuilder, build) {
     EXPECT_EQ(vbo->indexBuffer()->count, 10);
     EXPECT_EQ(vbo->vertexBuffer()->size(), 257);
 
-    EXPECT_EQ(vbo->indexBuffer()->type, RMIntegerType_U16);
+    EXPECT_EQ(vbo->indexBuffer()->header.type, RMIntegerType_U16);
     EXPECT_EQ(vbo->indexBuffer()->size(), 20);
 
 
@@ -477,7 +489,7 @@ TEST(RMVertexBufferObjectBuilder, build) {
     EXPECT_EQ(vbo->indexBuffer()->count, 11);
     EXPECT_EQ(vbo->vertexBuffer()->size(), 66001);
 
-    EXPECT_EQ(vbo->indexBuffer()->type, RMIntegerType_U32);
+    EXPECT_EQ(vbo->indexBuffer()->header.type, RMIntegerType_U32);
     EXPECT_EQ(vbo->indexBuffer()->size(), 44);
 }
 

@@ -47,3 +47,16 @@ TEST(RMTypeTest, cases) {
     EXPECT_EQ(sizeOfRMType(RMType_Double), 8);
 
 }
+
+
+TEST(RMTypeTest, maxValue) {
+    EXPECT_EQ(maxValueForType(RMIntegerType_8),int8_max);
+    EXPECT_EQ(maxValueForType(RMIntegerType_U8), uint8_max);
+
+    EXPECT_EQ(maxValueForType(RMIntegerType_16), int16_max);
+    EXPECT_EQ(maxValueForType(RMIntegerType_U16), uint16_max);
+
+    EXPECT_EQ(maxValueForType(RMIntegerType_32), int32_max);
+    EXPECT_EQ(maxValueForType(RMIntegerType_U32), uint32_max);
+
+}

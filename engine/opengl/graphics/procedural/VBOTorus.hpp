@@ -94,6 +94,8 @@ namespace rmengine {
         void VBOTorus::render() const {
             glBindVertexArray(vaoHandle);
             glDrawElements(GL_TRIANGLES, 6 * faces, GL_UNSIGNED_INT, ((GLubyte *)NULL + (0)));
+
+           // glDrawRangeElements(GL_TRIANGLES,  faces -1 , 3 * faces-1, 6 * faces , GL_UNSIGNED_INT , ((GLubyte *)NULL + (0)));
         }
 
         void VBOTorus::generateVerts(float * verts, float * norms, float * tex,

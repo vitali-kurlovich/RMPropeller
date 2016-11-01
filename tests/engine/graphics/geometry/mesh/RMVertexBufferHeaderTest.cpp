@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 
 #include <graphics/geometry/mesh/buffer/RMVertexBufferHeader.hpp>
-#include <graphics/geometry/mesh/buffer/builder/RMVertexBufferHeaderBuilder.hpp>
+#include <graphics/geometry/mesh/builder/RMVertexBufferHeaderBuilder.hpp>
 
 
 using namespace rmengine;

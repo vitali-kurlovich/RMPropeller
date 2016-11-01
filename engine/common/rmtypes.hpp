@@ -47,19 +47,25 @@ namespace rmengine {
     constexpr int8 int8_max = 127;
 
     constexpr uint8 uint8_min = 0;
-    constexpr uint8 uint8_max = 255;
+    constexpr uint8 uint8_max = 255U;
 
     constexpr int16 int16_min = -32768;
     constexpr int16 int16_max = 32767;
 
-    constexpr uint16 uint16_max = 65535;
+    constexpr uint16 uint16_max = 65535U;
     constexpr uint16 uint16_min = 0;
 
     constexpr int32 int32_min = -2147483647;
     constexpr int32 int32_max = 2147483647;
 
     constexpr uint32 uint32_min = 0;
-    constexpr uint32 uint32_max = 4294967295;
+    constexpr uint32 uint32_max = 4294967295U;
+
+    constexpr uint64 uint64_min = 0;
+    constexpr uint64 uint64_max = 18446744073709551615U;
+
+    constexpr int64 int64_min = -9223372036854775807;
+    constexpr int64 int64_max = 9223372036854775807;
 }
 
 

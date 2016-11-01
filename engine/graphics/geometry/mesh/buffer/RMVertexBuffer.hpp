@@ -7,34 +7,19 @@
 
 
 #include "../../geometry_common.hpp"
-
+#include "RMBuffer.hpp"
 #include "RMVertexBufferHeader.hpp"
 
 namespace rmengine {
 
     namespace graphics {
 
-        class RMVertexBuffer : public RMObject {
-        protected:
-            RMObjectPtr* _buffer{nullptr};
-
+        class RMVertexBuffer : public RMBuffer {
         public:
             const RMVertexBufferHeader header;
-            const uint32 count{0};
-
-            RMVertexBuffer(const RMVertexBufferHeader& header, RMObjectPtr* buffer, uint32 count) noexcept
-            :  _buffer(buffer), header(header), count(count)
-            {
-                if (_buffer) rmRetain(_buffer);
-            }
-
-            virtual ~RMVertexBuffer() {
-                if (_buffer) rmRelease(_buffer);
-            }
-
-            constexpr
-            void* data() const noexcept {
-                return  _buffer ? _buffer->get() : nullptr;
+        public:
+            RMVertexBuffer(const RMVertexBufferHeader& header, RMObjectPtr* buffer, uint32 count,  RMUsage usage = RMUsageStaticDraw) noexcept
+                    : RMBuffer::RMBuffer(buffer, count, usage), header(header) {
             }
 
             constexpr

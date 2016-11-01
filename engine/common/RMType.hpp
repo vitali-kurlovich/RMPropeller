@@ -60,34 +60,74 @@ namespace rmengine {
         RMRealType_Hight =  RMType_Double
     } RMRealType;
 
-    constexpr bool isUnsignedType(const RMType type) noexcept {
+    constexpr
+    bool isUnsignedType(const RMType type) noexcept {
         return (type & __RMTypeUnsignedBitFlag) != 0;
     }
 
-    constexpr bool isSignedType(const RMType type) noexcept {
+    constexpr
+    bool isUnsignedType(const RMIntegerType type) noexcept {
+        return (type & __RMTypeUnsignedBitFlag) != 0;
+    }
+
+    constexpr
+    bool isSignedType(const RMType type) noexcept {
         return (type & __RMTypeUnsignedBitFlag) == 0;
     }
 
-    constexpr bool isIntegerType(const RMType type) noexcept {
+    constexpr
+    bool isSignedType(const RMIntegerType type) noexcept {
+        return (type & __RMTypeUnsignedBitFlag) == 0;
+    }
+
+    constexpr
+    bool isIntegerType(const RMType type) noexcept {
         return (type & __RMTypeRealBitFlag) == 0;
     }
 
-    constexpr bool isRealType(const RMType type) noexcept {
+    constexpr
+    bool isIntegerType(const RMIntegerType type) noexcept {
+        return true;
+    }
+
+    constexpr
+    bool isRealType(const RMType type) noexcept {
         return (type & __RMTypeRealBitFlag) != 0;
     }
 
-    constexpr size_t sizeOfRMType(RMType type) noexcept {
+    constexpr
+    bool isRealType(const RMIntegerType type) noexcept {
+        return false;
+    }
+
+    constexpr
+    size_t sizeOfRMType(RMType type) noexcept {
         return static_cast<size_t>( 1 << (type & 0x03));
     }
 
-    constexpr size_t sizeOfRMType(RMIntegerType type) noexcept {
+    constexpr
+    size_t sizeOfRMType(RMIntegerType type) noexcept {
         return static_cast<size_t>( 1 << (type & 0x03));
     }
 
-    constexpr size_t sizeOfRMType(RMRealType type) noexcept {
+    constexpr
+    size_t sizeOfRMType(RMRealType type) noexcept {
         return static_cast<size_t>( 1 << (type & 0x03));
     }
 
+
+    constexpr
+    uint64 maxValueForType(const RMIntegerType type) noexcept {
+        return isUnsignedType(type) ?
+               type == RMIntegerType_U32 ? uint32_max :
+               (type == RMIntegerType_U16 ? uint16_max:
+                (type == RMIntegerType_U8 ? uint8_max : uint64_max))
+               :
+               type == RMIntegerType_32 ? int32_max :
+               (type == RMIntegerType_16 ? int16_max:
+                (type == RMIntegerType_8 ? int8_max : int64_max))
+                ;
+    }
 }
 
 #endif //RMPROPELLER_RMTYPE_HPP

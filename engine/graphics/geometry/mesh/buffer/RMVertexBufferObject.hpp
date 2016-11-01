@@ -18,13 +18,27 @@ namespace rmengine {
 
         class RMVertexBufferObject : public RMObject {
 
+        public:
+            typedef enum : uint8 {
+                RMDrawPrimitivePoints = 0,
+                RMDrawPrimitiveLines,
+                RMDrawPrimitiveLineStrip,
+                RMDrawPrimitiveLineLoop,
+                RMDrawPrimitiveTriangles,
+                RMDrawPrimitiveTriangleStrip,
+                RMDrawPrimitiveTriangleFan
+            } RMDrawPrimitive;
+
+        protected:
             RMVertexBuffer* _vertexBuffer{nullptr};
             RMIndexBuffer* _indexBuffer{nullptr};
 
         public:
 
-            RMVertexBufferObject(RMVertexBuffer* vertexBuffer, RMIndexBuffer* indexBuffer) noexcept
-            : _vertexBuffer(vertexBuffer), _indexBuffer(indexBuffer)
+            const RMDrawPrimitive primitive{RMDrawPrimitiveTriangles};
+
+            RMVertexBufferObject(RMVertexBuffer* vertexBuffer, RMIndexBuffer* indexBuffer, RMDrawPrimitive primitive = RMDrawPrimitiveTriangles) noexcept
+            : _vertexBuffer(vertexBuffer), _indexBuffer(indexBuffer), primitive(primitive)
             {
                 if (_vertexBuffer) {
                     rmRetain(_vertexBuffer);

@@ -7,10 +7,17 @@
 
 #include "material_common.hpp"
 
+#include <string>
+
 #include "technique/RMTechnique.hpp"
 
 namespace rmengine {
     namespace graphics {
+
+        class RMMaterialParametr {
+
+            std::string name;
+        };
 
         class RMMaterial {
 

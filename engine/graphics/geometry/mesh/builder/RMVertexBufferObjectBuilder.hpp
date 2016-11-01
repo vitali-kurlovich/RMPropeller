@@ -7,8 +7,8 @@
 
 #include <cstdlib>
 
-#include "../RMVertexBufferHeader.hpp"
-#include "../RMVertexBufferObject.hpp"
+#include "graphics/geometry/mesh/buffer/RMVertexBufferHeader.hpp"
+#include "graphics/geometry/mesh/buffer/RMVertexBufferObject.hpp"
 
 namespace rmengine {
 
@@ -37,6 +37,7 @@ namespace rmengine {
             uint32 _maxIndexPosition{uint32_max};
 
             uint32 _maxIndexValue{uint32_max};
+            uint32 _minIndexValue{uint32_max};
 
             void *_vertexBuffer{nullptr};
             uint32 *_indexBuffer{nullptr};
@@ -113,7 +114,9 @@ namespace rmengine {
                             break;
                     }
 
-                    ib = new RMIndexBuffer(new RMObjectPtr(indexBuffer), indexCount, type);
+
+                    RMIndexBufferHeader header(RMRange<uint32>{_minIndexValue, (_maxIndexValue - _minIndexValue + 1)}, type);
+                    ib = new RMIndexBuffer(new RMObjectPtr(indexBuffer), indexCount, header);
                 }
 
                 return new RMVertexBufferObject(vb, ib);
@@ -217,6 +220,13 @@ namespace rmengine {
                 } else if (index > _maxIndexValue) {
                     _maxIndexValue = index;
                 }
+
+                if (_minIndexValue == uint32_max) {
+                    _minIndexValue = index;
+                } else if (index < _minIndexValue) {
+                    _minIndexValue = index;
+                }
+
                 return *this;
             }
 
