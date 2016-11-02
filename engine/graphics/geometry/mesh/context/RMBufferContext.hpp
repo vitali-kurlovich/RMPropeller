@@ -17,12 +17,24 @@ namespace rmengine {
 
         public:
             const uint32 count{0};
-            const RMUsage usage{RMUsageStaticDraw};
+            const RMBuffer::RMUsage usage{RMBuffer::RMUsageStaticDraw};
 
-            RMBufferContext(RMBuffer *buffer)
+            RMBufferContext(const RMBuffer *buffer)
                     : count(buffer->count), usage(buffer->usage) {
 
             }
+
+            virtual ~RMGLBufferContext() {
+                deleteBuffer();
+            }
+
+            virtual void genBuffer() = 0;
+
+            virtual void void deleteBuffer() = 0;
+
+            virtual void void bindBuffer() = 0;
+
+            virtual void bufferData(const RMBuffer *buffer) = 0;
         }
     }
 }

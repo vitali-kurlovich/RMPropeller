@@ -83,12 +83,11 @@ namespace rmengine {
                 RMVertexBuffer *vb = nullptr;
                 if (_maxVertexPosition != uint32_max && _maxIndexPosition != uint32_max) {
                     size_t buffer_size = _header.size() * (_maxIndexValue + 1);
-                    vertexBuffer = std::malloc(buffer_size);
-                    std::memcpy(vertexBuffer, _vertexBuffer, buffer_size);
-                    vb = new RMVertexBuffer(_header, new RMObjectPtr(vertexBuffer), _maxIndexValue + 1);
+                    RMObjectPtr* buffer = new RMObjectPtr();
+                    buffer->memcopy(_vertexBuffer, buffer_size);
+                    vb = new RMVertexBuffer(_header, buffer, _maxIndexValue + 1);
                 }
 
-                void* indexBuffer = nullptr;
                 RMIndexBuffer* ib = nullptr;
 
                 if (_maxIndexPosition != uint32_max) {
@@ -96,27 +95,35 @@ namespace rmengine {
                     auto type = integerTypeForCount(_maxIndexValue);
                     const uint32 indexCount((_maxIndexPosition + 1));
 
-                    size_t buffer_size = sizeOfRMType(type) * indexCount;
+                    const size_t buffer_size = sizeOfRMType(type) * indexCount;
 
-                    indexBuffer = std::malloc(buffer_size);
-
+                    auto buffer = new RMObjectPtr();
                     switch (type) {
-                        case RMIntegerType_U8:
-                            memory::cpsmemcpy(static_cast<uint8*>(indexBuffer), _indexBuffer, indexCount);
+                        case RMIntegerType_U8: {
+                            auto indexBuffer = std::malloc(buffer_size);
+                            memory::cpsmemcpy(static_cast<uint8 *>(indexBuffer), _indexBuffer, indexCount);
+                            buffer->memcopy(indexBuffer, buffer_size);
+                            free(indexBuffer);
+                        }
                             break;
 
-                        case RMIntegerType_U16:
-                            memory::cpsmemcpy(static_cast<uint16*>(indexBuffer), _indexBuffer, indexCount);
+                        case RMIntegerType_U16: {
+                            auto indexBuffer = std::malloc(buffer_size);
+                            memory::cpsmemcpy(static_cast<uint16 *>(indexBuffer), _indexBuffer, indexCount);
+                            buffer->memcopy(indexBuffer, buffer_size);
+                            free(indexBuffer);
+                        }
                             break;
 
-                        default:
-                            std::memcpy(indexBuffer, _indexBuffer, buffer_size);
+                        default: {
+                            buffer->memcopy(_indexBuffer, buffer_size);
+                        }
                             break;
                     }
 
 
                     RMIndexBufferHeader header(RMRange<uint32>{_minIndexValue, (_maxIndexValue - _minIndexValue + 1)}, type);
-                    ib = new RMIndexBuffer(new RMObjectPtr(indexBuffer), indexCount, header);
+                    ib = new RMIndexBuffer(buffer, indexCount, header);
                 }
 
                 return new RMVertexBufferObject(vb, ib);

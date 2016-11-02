@@ -19,7 +19,7 @@ namespace rmengine {
         public:
             const RMVertexBufferHeader header;
 
-            RMVertexBufferContext(RMVertexBuffer *buffer)
+            RMVertexBufferContext(const RMVertexBuffer *buffer)
                     : RMBufferContext::RMBufferContext(buffer), header(buffer->header) {
             }
         }

@@ -9,7 +9,8 @@
 
 #include "../../../../../../graphics/geometry/mesh/context/RMIndexBufferContext.hpp"
 //#include "../../../../../../graphics/geometry/mesh/context/RMVertexBufferContext.hpp"
-
+#include "../buffer/RMGLBuffer.hpp"
+#include "../buffer/RMGLBufferContext.hpp"
 
 namespace rmengine {
 
@@ -18,14 +19,33 @@ namespace rmengine {
         class RMGLIndexBufferContext : public RMIndexBufferContext {
 
         protected:
-            GLuint bufferId{0};
+            RMGLBufferContext _glBufferContext;
+
         public:
 
-            RMGLIndexBufferContext(RMIndexBuffer* buffer)
-                    : RMIndexBufferContext::RMIndexBufferContext(buffer) {
+            RMGLIndexBufferContext(const RMIndexBuffer* buffer)
+                    : RMIndexBufferContext::RMIndexBufferContext(buffer),
+                      _glBufferContext(buffer, GL_ELEMENT_ARRAY_BUFFER) {
+                genBuffer();
+                bindBuffer();
+                bufferData(buffer);
             }
 
+            virtual void genBuffer() override {
+                _glBufferContext.genBuffer();
+            }
 
+            virtual void bindBuffer() override {
+                _glBufferContext.bindBuffer();
+            }
+
+            virtual void bufferData(const RMBuffer* buffer) override {
+                _glBufferContext.bufferData(buffer);
+            }
+
+            virtual void deleteBuffer() override {
+                _glBufferContext.deleteBuffer();
+            }
         };
     }
 }

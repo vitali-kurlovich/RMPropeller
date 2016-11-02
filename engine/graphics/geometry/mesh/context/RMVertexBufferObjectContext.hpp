@@ -17,16 +17,17 @@ namespace rmengine {
 
     namespace graphics {
 
-        class RMVertexBufferObjectContext : public RMObject, RMRenderable {
+        class RMVertexBufferObjectContext : public RMObject {
         protected:
             RMVertexBufferContext* _vertexBufferContext{nullptr};
             RMIndexBufferContext* _indexBufferContext{nullptr};
 
         public:
-
             const RMVertexBufferObject::RMDrawPrimitive primitive{RMDrawPrimitiveTriangles};
 
-            RMVertexBufferObjectContext(RMVertexBufferContext* vertexBufferContext, RMIndexBufferContext* indexBufferContext, RMVertexBufferObject::RMDrawPrimitive primitive = RMDrawPrimitiveTriangles) noexcept
+            RMVertexBufferObjectContext(RMVertexBufferContext* vertexBufferContext,
+                                        RMIndexBufferContext* indexBufferContext,
+                                        RMVertexBufferObject::RMDrawPrimitive primitive = RMDrawPrimitiveTriangles) noexcept
             : _vertexBufferContext(vertexBufferContext), _indexBufferContext(indexBufferContext), primitive(primitive)
             {
                 if (_vertexBufferContext) {
@@ -44,6 +45,17 @@ namespace rmengine {
                 if (_indexBufferContext) {
                     rmRelease(_indexBufferContext);
                 }
+            }
+
+
+            constexpr
+            RMVertexBufferContext* vertexBufferContext() const {
+                return _vertexBufferContext;
+            }
+
+            constexpr
+            RMIndexBufferContext* indexBufferContext() const {
+                return _indexBufferContext;
             }
 
         };

@@ -18,7 +18,7 @@ namespace rmengine {
         public:
             const RMIntegerType type{RMIntegerType_U8};
 
-            RMIndexBufferContext(RMIndexBuffer* buffer)
+            RMIndexBufferContext(const RMIndexBuffer* buffer)
                     : RMBufferContext::RMBufferContext(buffer), type(buffer->type) {
             }
 

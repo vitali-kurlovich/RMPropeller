@@ -7,6 +7,7 @@
 
 #include <glad/glad.h>
 
+#include "common/RMGLTypes.hpp"
 #include "../graphics/graphics.hpp"
 
 #endif //RMPROPELLER_OPENGL_COMMON_HPP

@@ -36,7 +36,7 @@ TEST(RMObject, retain) {
 
 }
 
-TEST(AutoreleasePool, retain) {
+TEST(RMAutoreleasePool, retain) {
     RMObject* objectA = new RMObject();
     RMObject* objectB = new RMObject();
 
