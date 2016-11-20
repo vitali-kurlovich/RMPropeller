@@ -5,17 +5,59 @@
 #ifndef RMPROPELLER_RMPROGRAM_HPP
 #define RMPROPELLER_RMPROGRAM_HPP
 
+#include <vector>
+
 #include "graphics/material/material_common.hpp"
+
+#include "RMShader.hpp"
 
 namespace rmengine {
 
     namespace graphics {
 
 
-        class RMShaderProgram {
+        class RMShaderProgram : public RMObject {
+
+        protected:
+            std::vector<RMShader*> _shaders;
+
+            void clearShaders() {
+                for (RMShader* shader : _shaders) {
+                    rmRelease(shader);
+                }
+                _shaders.clear();
+            }
+
+        public:
+
+
+            RMShaderProgram(std::initializer_list<RMShader*> shaders)
+            : _shaders(shaders)
+            {
+                for (RMShader* shader : _shaders) {
+                    rmRetain(shader);
+                }
+            }
+
+            virtual ~RMShaderProgram() {
+                for (RMShader* shader : _shaders) {
+                    rmRelease(shader);
+                }
+            }
 
             virtual bool compile() noexcept = 0;
-            virtual bool isCompiled() const noexcept = 0;
+
+
+            constexpr uint32 shaderCount() const noexcept  {
+                return _shaders.size();
+            }
+
+            constexpr RMShader* shaderAtIndex(uint32 index) const {
+                return _shaders[index];
+            }
+
+            virtual void use() const noexcept = 0;
+
 
             virtual void setUniform( const char *name, float x, float y, float z, float w) noexcept = 0;
             virtual void setUniform( const char *name, float x, float y, float z) noexcept = 0;

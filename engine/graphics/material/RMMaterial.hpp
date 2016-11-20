@@ -19,7 +19,7 @@ namespace rmengine {
             std::string name;
         };
 
-        class RMMaterial {
+        class RMMaterial : RMObject {
 
         };
     }

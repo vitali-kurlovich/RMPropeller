@@ -5,6 +5,7 @@
 #ifndef RMPROPELLER_OPENGL_COMMON_HPP
 #define RMPROPELLER_OPENGL_COMMON_HPP
 
+
 #include <glad/glad.h>
 
 #include "common/RMGLTypes.hpp"

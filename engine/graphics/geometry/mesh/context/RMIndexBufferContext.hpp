@@ -16,10 +16,11 @@ namespace rmengine {
 
         class RMIndexBufferContext : public RMBufferContext {
         public:
-            const RMIntegerType type{RMIntegerType_U8};
+
+            const RMIndexBufferHeader header;
 
             RMIndexBufferContext(const RMIndexBuffer* buffer)
-                    : RMBufferContext::RMBufferContext(buffer), type(buffer->type) {
+                    : RMBufferContext::RMBufferContext(buffer), header(buffer->header) {
             }
 
         };

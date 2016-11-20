@@ -47,6 +47,11 @@ namespace rmengine {
             }
             return _ptr;
         }
+
+        constexpr
+        size_t size() const noexcept {
+            return _size;
+        }
     };
 }
 

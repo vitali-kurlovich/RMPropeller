@@ -58,6 +58,8 @@ namespace rmengine {
                 return _indexBufferContext;
             }
 
+
+            virtual void bindVertexBufferObject() noexcept = 0;
         };
     }
 }

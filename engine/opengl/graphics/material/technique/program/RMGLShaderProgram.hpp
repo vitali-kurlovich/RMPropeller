@@ -8,6 +8,8 @@
 
 #include "../../../../opengl_common.hpp"
 
+#import "RMGLShader.hpp"
+
 namespace rmengine {
 
     namespace graphics {
@@ -18,66 +20,70 @@ namespace rmengine {
         class RMGLShaderProgram : public RMShaderProgram {
 
         private:
-            GLuint _programHandle{0};
+            GLuint _handle{0};
             bool _compiled{false};
 
         public:
 
-            const GLuint getProgramHandle() {
-                if (_programHandle == 0) {
-
-                    _programHandle = glCreateProgram();
-                }
-                return _programHandle;
+            RMGLShaderProgram(std::initializer_list<RMShader*> shaders)
+            : RMShaderProgram::RMShaderProgram(shaders)
+                    {
             }
 
-            void attachShader(RMGLShader* shader) {
-
-                if (shader->isCompiled() || shader->compile()) {
-                    GLuint  shaderHandle =  shader->getHandle();
-                    glAttachShader(getProgramHandle(), shaderHandle);
-                }
+            const GLuint handle() {
+                return _handle;
             }
-
-
 
             bool compile() noexcept override {
-                if (isCompiled())
+                if (_compiled)
                     return true;
 
-                glLinkProgram(getProgramHandle());
+                if (_handle == 0) {
+                    _handle = glCreateProgram();
+                }
+
+                if (_handle == 0)
+                    return false;
+
+                uint32 count = shaderCount();
+                for (uint32 index = 0; index < count; ++index) {
+                    RMGLShader* shader = dynamic_cast<RMGLShader*>(shaderAtIndex(index));
+                    if (shader != nullptr && shader->compile()) {
+                        glAttachShader(_handle, shader->getHandle());
+                    } else {
+                        return false;
+                    }
+                }
+
+                glLinkProgram(_handle);
 
                 GLint program_linked;
-                glGetProgramiv(getProgramHandle(), GL_LINK_STATUS, &program_linked);
+                glGetProgramiv(_handle, GL_LINK_STATUS, &program_linked);
                 if (program_linked != GL_TRUE)
                 {
                     GLsizei log_length = 0;
                     GLchar message[1024];
-                    glGetProgramInfoLog(getProgramHandle(), 1024, &log_length, message);
+                    glGetProgramInfoLog(_handle, 1024, &log_length, message);
 
 
                     std::cout << message;
                     // Write the error to a log
                 } else {
                     _compiled = true;
+                    clearShaders();
                 }
 
-
                 return _compiled;
             }
 
-            bool isCompiled() const noexcept override {
-                return _compiled;
-            }
-
-            void use() {
-                glUseProgram(getProgramHandle());
+            void use() const noexcept override {
+                if (_handle != 0) glUseProgram(_handle);
             }
 
         private:
 
             GLint getUniformLocation(const char *name)  noexcept {
-                return glGetUniformLocation(getProgramHandle(), name);
+                return glGetUniformLocation(_handle, name);
             }
 
         public:

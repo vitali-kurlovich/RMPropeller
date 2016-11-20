@@ -2,10 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 
 project(glad)
 
-include_directories(include)
-
 set(SOURCE_LIB src/glad.c)
+set(HEADERS_LIB include/glad/glad.h)
 
-add_library(glad STATIC ${SOURCE_LIB})
-
-
+add_library(glad STATIC ${SOURCE_LIB} ${HEADERS_LIB})
+target_include_directories(glad PUBLIC include)

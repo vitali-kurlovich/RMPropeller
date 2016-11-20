@@ -7,7 +7,7 @@
 
 #include <cstdint>
 #include <string>
-
+#include <limits>
 #include "../../libs/math/rmvmath/types/float.h"
 
 

@@ -20,8 +20,8 @@ namespace rmengine {
         protected:
             GLuint _vertexArrayId{0};
         public:
-            RMGLVertexBufferObjectContext(RMGLVertexBufferContext *vertexBufferContext,
-                                          RMGLIndexBufferContext *indexBufferContext,
+            RMGLVertexBufferObjectContext(RMVertexBufferContext *vertexBufferContext,
+                                          RMIndexBufferContext *indexBufferContext,
                                           RMVertexBufferObject::RMDrawPrimitive primitive = RMDrawPrimitiveTriangles) noexcept
                     : RMVertexBufferObjectContext::RMVertexBufferObjectContext(vertexBufferContext, indexBufferContext,
                                                                                primitive) {
@@ -58,6 +58,11 @@ namespace rmengine {
 
             void unbindVertexArray() {
                 glBindVertexArray(0);
+            }
+
+
+            virtual void bindVertexBufferObject() noexcept override {
+                bindVertexArray();
             }
 
             constexpr

@@ -11,6 +11,14 @@ add_executable(RMPropellerEngineTest
         core/RMObjectTest.cpp
         core/system/memoryTest.cpp
 
+        core/buffer/RMMemmoryPageTest.cpp
+        core/buffer/RMMemmoryBufferTest.cpp
+
+        core/serialize/RMCoderTest.cpp
+        core/serialize/RMDecoderTest.cpp
+
+        core/resorce/RMResourceHeaderTest.cpp
+
         graphics/material/technique/pass/RMPassTest.cpp
         graphics/material/technique/pass/RMBlendTest.cpp
         graphics/material/technique/pass/RMDepthTest.cpp

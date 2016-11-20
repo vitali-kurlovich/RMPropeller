@@ -18,7 +18,7 @@
 #include "engine/opengl/graphics/procedural/VBOTorus.hpp"
 #include "engine/opengl/graphics/procedural/VBOAxis.hpp"
 
-#include "engine/opengl/graphics/material/technique/program/shader/RMGLShader.hpp"
+#include "engine/opengl/graphics/material/technique/program/RMGLShader.hpp"
 #include "engine/opengl/graphics/material/technique/program/RMGLShaderProgram.hpp"
 
 #include "engine/graphics/camera/RMCamera3dUtils.hpp"
@@ -36,8 +36,9 @@ using namespace rmengine;
 using namespace rmengine::graphics;
 
 using std::ifstream;
+using std::ofstream;
 using std::ios;
-
+using std::ios_base;
 
 
 // GLAD_DEBUG is only defined if the c-debug generator was used
@@ -72,6 +73,17 @@ int main(void)
     std::cout <<"sizeof RMVertexBufferObject: " << sizeof(RMVertexBufferObject) << std::endl;
 
 
+    ofstream ofile("filemap.txt",  ios_base::out | ios_base::trunc | ios_base::binary);
+
+
+    if (!ofile.is_open()) {
+        std::cout << "File can't bee opend\n"; // напечатать соответствующее сообщение
+        return 1;
+    }
+
+    ofile << std::string("file/texture.png") << " "<< (uint32)666;
+
+    ofile.close();
 
     GLFWwindow* window;
     glfwSetErrorCallback(error_callback);
@@ -158,9 +170,7 @@ int main(void)
 
 
 
-    RMGLShader vertShader(vert, RMGLShaderTypeVertex);
-
-    vertShader.compile();
+    auto vertShader = new RMGLShader(vert, RMShader::RMShaderTypeVertex);
 
     string fileName ("shader/basic.frag");
     ifstream inFileFrag( fileName, std::ios::in );
@@ -175,16 +185,11 @@ int main(void)
     fragCode << inFileFrag.rdbuf();
     inFileFrag.close();
 
-    RMGLShader fragShader(fragCode.str().c_str(), RMGLShaderTypeFragment);
+    auto fragShader = new RMGLShader(fragCode.str().c_str(), RMShader::RMShaderTypeFragment);
 
-    fragShader.compile();
-    //shader.compile();
+    auto program = new RMGLShaderProgram{vertShader, fragShader};
 
-    RMGLShaderProgram program;
-
-    program.attachShader(&vertShader);
-    program.attachShader(&fragShader);
-    program.compile();
+    program->compile();
 
 
     VBOTorus torus(0.8f, 0.6f, 50, 50);
@@ -231,8 +236,8 @@ int main(void)
         auto mvp = mat4x4::identity()*transform.getGlobalTransform()*view*p;
 
 
-        program.setUniform("MVP",mvp);
-        program.use();
+        program->setUniform("MVP",mvp);
+        program->use();
        torus.render();
 
         ratio = width / (float) height;
