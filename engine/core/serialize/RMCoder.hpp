@@ -8,81 +8,74 @@
 #include "../../common/common.hpp"
 
 #include <string>
+#include <vector>
+#include <array>
+
 #include "../buffer/RMIOBuffer.hpp"
 
 namespace rmengine {
 
     namespace serialize {
 
+        //template <typename T>
         class RMCoder {
             buffer::RMIOWriteBuffer* _writeBuffer{nullptr};
+
+        protected:
+            bool write(const void *buffer, size_t size) noexcept {
+                return _writeBuffer->write(buffer, size);
+            }
+
         public:
 
             RMCoder(buffer::RMIOWriteBuffer* writeBuffer)
                     : _writeBuffer(writeBuffer) {
                         assert(_writeBuffer != nullptr);
-                       rmRetain(_writeBuffer);
                     }
 
-            ~RMCoder() {
-                rmRelease(_writeBuffer);
+            template <typename T>
+            void encode(const T val) {
+                const T buffer(val);
+                write(&buffer, sizeof(T));
             }
 
-            void encode(const uint8 val) {
-                const uint8 buffer(val);
-                _writeBuffer->write(&buffer, sizeof(val));
+            void encode(RMType type) {
+                encode((uint8) type);
             }
 
-            void encode(const int8 val) {
-                const int8 buffer(val);
-                _writeBuffer->write(&buffer, sizeof(val));
+            template <typename T>
+            void encode(const T* buffer, uint32 lenght) {
+                encode(lenght);
+                write(buffer, lenght*sizeof(T));
             }
 
-            void encode(const uint16 val) {
-                const uint16 buffer(val);
-                _writeBuffer->write(&buffer, sizeof(val));
+            void encode(const std::vector<uint8> &vector) {
+                encode(vector.data(),vector.size());
             }
 
-            void encode(const int16 val) {
-                const int16 buffer(val);
-                _writeBuffer->write(&buffer, sizeof(val));
+            void encode(const char* str) {
+                uint32 length = strlen(str);
+                encode(length);
+                write(str, length*sizeof(str[0]));
             }
 
-            void encode(const uint32 val) {
-                const uint32 buffer(val);
-                _writeBuffer->write(&buffer, sizeof(val));
-            }
-
-            void encode(const int32 val) {
-                const int32 buffer(val);
-                _writeBuffer->write(&buffer, sizeof(val));
-            }
-
-            void encode(const uint64 val) {
-                const uint64 buffer(val);
-                _writeBuffer->write(&buffer, sizeof(val));
-            }
-
-            void encode(const int64 val) {
-                const int64 buffer(val);
-                _writeBuffer->write(&buffer, sizeof(val));
-            }
-
-            void encode(const float val) {
-                const float buffer(val);
-                _writeBuffer->write(&buffer, sizeof(val));
-            }
-
-            void encode(const double val) {
-                const double buffer(val);
-                _writeBuffer->write(&buffer, sizeof(val));
+            void encode(const wchar_t* str) {
+                const uint32 length = wcslen(str);
+                encode(length);
+                write(str, length*sizeof(str[0]));
             }
 
             void encode(const std::string &str) {
-                //const double buffer(val);
-                _writeBuffer->write(str.data(), str.length()*sizeof(char));
+                const uint32 length = str.length();
+                encode(length);
+                write(str.data(), length*sizeof(char));
             }
 
+            void encode(const std::wstring &str) {
+                const uint32 length = str.length();
+                encode(length);
+                write(str.data(), length*sizeof(wchar_t));
+            }
         };
     }
 }

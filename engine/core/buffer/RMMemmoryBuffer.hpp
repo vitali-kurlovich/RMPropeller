@@ -15,7 +15,7 @@ namespace rmengine {
 
     namespace buffer {
 
-        class RMMemmoryBuffer final : public RMIOReadBuffer, RMIOWriteBuffer {
+        class RMMemmoryBuffer final : public RMIOReadBuffer, public RMIOWriteBuffer {
             std::list<RMMemmoryPage*> _pages;
             std::list<RMMemmoryPage*> _pool;
             size_t _size{0};

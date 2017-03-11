@@ -20,7 +20,7 @@ namespace rmengine {
             const mime::RMMime mime;
             const uint32 size{0};
 
-            RMResourceHeader(const hash::RMSHA1 &s, mime::RMMime &mimetype, uint32 size)
+            RMResourceHeader(const hash::RMSHA1 &s, const mime::RMMime &mimetype, uint32 size)
                     :  sha1(s), mime(mimetype), size(size) {
             }
         };

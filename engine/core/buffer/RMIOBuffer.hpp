@@ -12,7 +12,7 @@ namespace rmengine {
 
     namespace buffer  {
 
-        class RMIOBuffer : public RMObject {
+        class RMIOBuffer  {
         public:
             virtual size_t size() const noexcept = 0;
         };

@@ -32,6 +32,9 @@
 #include "engine/graphics/geometry/mesh/buffer/RMVertexBuffer.hpp"
 #include "engine/graphics/geometry/mesh/buffer/RMVertexBufferObject.hpp"
 
+#include "engine/core/resorce/RMResourceHeader.hpp"
+
+
 using namespace rmengine;
 using namespace rmengine::graphics;
 
@@ -60,8 +63,54 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
 }
+
+ struct ICFloat {
+     union {
+         float value;
+         struct {
+             uint32 fraction:23;
+             uint32 exponent:8;
+             uint32 sing:1;
+         };
+     };
+
+     ICFloat(float f) : value(f) {
+
+     }
+} ;
+
+
+float fRand(float fMin, float fMax)
+{
+    float f = (double)rand() / RAND_MAX;
+    return fMin + f * (fMax - fMin);
+}
+
+
+
 int main(void)
 {
+
+    float vals[] {0.5f, 1.7f, 2.9f, 3.7f, 4.667f};
+
+    std::cout << std::hex;
+    for (size_t index = 0; index < 500; ++index) {
+        ICFloat v(fRand(-10.f, 10.f));
+        std::cout << v.fraction;
+    }
+    std::cout << std::endl;
+
+    std::cout << std::hex;
+    for (size_t index = 0; index < 5; ++index) {
+        ICFloat v(vals[index]);
+        std::cout << v.fraction;
+    }
+    std::cout << std::endl;
+
+
+
+    std::cout <<"sizeof hash::RMSHA1: " << sizeof(hash::RMSHA1) << std::endl;
+    std::cout <<"sizeof RMResourceHeader: " << sizeof(resource::RMResourceHeader) << std::endl;
 
     std::cout <<"sizeof RMVertexAttributeItem: " << sizeof(RMVertexAttributeItem) << std::endl;
 

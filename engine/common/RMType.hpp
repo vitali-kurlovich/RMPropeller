@@ -37,7 +37,6 @@ namespace rmengine {
 
     } RMType;
 
-
     typedef enum : uint8 {
         RMIntegerType_8 = RMType_Int8,
         RMIntegerType_U8 = RMType_UInt8,
