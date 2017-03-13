@@ -44,6 +44,11 @@ using std::ios;
 using std::ios_base;
 
 
+struct  SHA1 {
+    uint8 a[20];
+};
+
+
 // GLAD_DEBUG is only defined if the c-debug generator was used
 #ifdef GLAD_DEBUG
 // logs every gl call to the console
@@ -107,7 +112,11 @@ int main(void)
     }
     std::cout << std::endl;
 
+// SHA1
 
+    std::cout << std::dec;
+
+    std::cout <<"sizeof SHA1: " << sizeof(SHA1) << std::endl;
 
     std::cout <<"sizeof hash::RMSHA1: " << sizeof(hash::RMSHA1) << std::endl;
     std::cout <<"sizeof RMResourceHeader: " << sizeof(resource::RMResourceHeader) << std::endl;

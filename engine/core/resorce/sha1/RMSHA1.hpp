@@ -16,10 +16,6 @@ namespace rmengine {
             union {
                 const uint8 sha1_20[20]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
                 const uint32 sha1_20_5[5];
-                struct {
-                    const uint64 sha1_16[2];
-                    const uint32 sha1_4;
-                };
             };
 
             constexpr
@@ -61,7 +57,12 @@ namespace rmengine {
         constexpr
         bool operator==(const RMSHA1 &a, const RMSHA1 &b) noexcept {
             return &a == &b ||
-                   (a.sha1_16[0] == b.sha1_16[0] && a.sha1_16[1] == b.sha1_16[1] && a.sha1_4 == b.sha1_4);
+                    ( a.sha1_20_5[0] == b.sha1_20_5[0] &&
+                      a.sha1_20_5[1] == b.sha1_20_5[1] &&
+                      a.sha1_20_5[2] == b.sha1_20_5[2] &&
+                      a.sha1_20_5[3] == b.sha1_20_5[3] &&
+                      a.sha1_20_5[4] == b.sha1_20_5[4]
+                    );
         }
 
         constexpr
@@ -77,13 +78,12 @@ namespace std {
     class hash<rmengine::hash::RMSHA1> {
     public:
         size_t operator()(const rmengine::hash::RMSHA1 &rmsha1) const {
-
-            size_t result = (rmsha1.sha1_20_5[0]
-                             ^rmsha1.sha1_20_5[1]
-                             ^rmsha1.sha1_20_5[2]
-                             ^rmsha1.sha1_20_5[3]
-                             ^rmsha1.sha1_20_5[4]);
-            return result;
+            return static_cast<size_t>(
+                    rmsha1.sha1_20_5[0]
+                    ^rmsha1.sha1_20_5[1]
+                    ^rmsha1.sha1_20_5[2]
+                    ^rmsha1.sha1_20_5[3]
+                    ^rmsha1.sha1_20_5[4]);
         }
     };
 }

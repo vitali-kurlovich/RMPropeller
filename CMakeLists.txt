@@ -25,6 +25,10 @@ include_directories(libs/glad/include)
 add_subdirectory(libs/sha1)
 include_directories(libs/sha1/include)
 
+
+add_subdirectory(libs/mathfu)
+add_subdirectory(libs/glm)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES main.cpp)
