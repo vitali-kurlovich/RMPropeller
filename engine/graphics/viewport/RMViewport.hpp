@@ -14,8 +14,8 @@ namespace rmengine {
         class RMViewport {
 
         private:
-            vec2 _size{vec2::zero()};
-            vec2 _origin{vec2::zero()};
+            vec2 _size;
+            vec2 _origin;
             rgbaf _clearColor;
 
             union {
@@ -35,7 +35,7 @@ namespace rmengine {
 
 
             RMViewport(const vec2& size)
-            :_origin(vec2::zero()), _size(size)
+            : _size(size)
             {}
 
             RMViewport(const vec2& size, const vec2& origin)

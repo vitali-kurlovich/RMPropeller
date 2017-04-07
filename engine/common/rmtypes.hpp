@@ -8,6 +8,10 @@
 #include <cstdint>
 #include <string>
 #include <limits>
+#include <libs/glm/glm/vec2.hpp>
+#include <libs/glm/glm/vec3.hpp>
+#include <libs/glm/glm/vec4.hpp>
+
 #include "../../libs/math/rmvmath/types/float.h"
 
 
@@ -28,9 +32,9 @@ namespace rmengine {
 
     typedef std::string string;
 
-    typedef rmmath::fvec2 vec2;
-    typedef rmmath::fvec3 vec3;
-    typedef rmmath::fvec4 vec4;
+    typedef glm::mediump_vec2 vec2;
+    typedef glm::mediump_vec3 vec3;
+    typedef glm::mediump_vec4 vec4;
 
     typedef rmmath::favec3 pos2;
     typedef rmmath::favec4 pos3;

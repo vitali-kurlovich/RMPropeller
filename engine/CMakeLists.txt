@@ -4,9 +4,10 @@ project(RMPropellerEngine)
 
 include_directories(../libs/glad/include)
 
-add_definitions(-std=c++11)
+add_definitions(-std=c++14)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+add_subdirectory(libs/glm)
 
 include_directories(../libs)
 include_directories(../libs/math/rmvmath)
